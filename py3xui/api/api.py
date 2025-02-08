@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """This module provides classes to interact with the XUI API."""
 
 from py3xui.api import ClientApi, DatabaseApi, InboundApi
@@ -18,7 +20,7 @@ class Api:
             self.login()
 
     @classmethod
-    def from_env(cls, skip_login: bool = False):
+    def from_env(cls, skip_login: bool = False) -> Api:
         """Initialize the API client from environment variables."
         host = env.xui_host()
         username = env.xui_username()
