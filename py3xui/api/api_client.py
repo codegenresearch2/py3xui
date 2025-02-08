@@ -26,7 +26,7 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            client = api.client.get_by_email("email")
+            client: py3xui.Client = api.client.get_by_email("email")
         '''
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
@@ -58,7 +58,7 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            ips = api.client.get_ips("email")
+            ips: str | None = api.client.get_ips("email")
         '''
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
@@ -82,7 +82,7 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            clients = [...]  # List of Client objects
+            clients: list[py3xui.Client] = [...]  # List of Client objects
             api.client.add(inbound_id, clients)
         '''
         endpoint = "panel/api/inbounds/addClient"
