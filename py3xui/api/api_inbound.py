@@ -1,1 +1,1 @@
-Here is a shorter version of the code snippet.
+import requests\\n\\n# Function to fetch data from an API\\ndef fetch_data(url):\\n    response = requests.get(url)\\n    if response.status_code == 200:\\n        return response.json()\\n    else:\\n        raise Exception(\"Failed to retrieve data\")
