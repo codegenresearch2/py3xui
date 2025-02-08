@@ -1,1 +1,1 @@
-from typing import Any, Callable\\\\\nimport requests\\\\\nfrom time import sleep\\\\\n\\\\\nfrom py3xui.utils import Logger\\\\\n\\\\\nlogger = Logger(__name__)\\\\\n\\\\\n# pylint: disable=too-few-public-methods\\\\\nclass ApiFields:\\\\
+from typing import Any, Callable\\"import requests\\"from time import sleep\\\n\\"from py3xui.utils import Logger\\\"\\"logger = Logger(__name__)\\\"\\"# pylint: disable=too-few-public-methods\\"class ApiFields:\\"
