@@ -13,6 +13,10 @@ class Api:
 
     def __init__(self, host: str, username: str, password: str, skip_login: bool = False):
         """Initialize the API client."
+        self.host = host
+        self.username = username
+        self.password = password
+        self.skip_login = skip_login
         self.client = ClientApi(host, username, password)
         self.inbound = InboundApi(host, username, password)
         self.database = DatabaseApi(host, username, password)
