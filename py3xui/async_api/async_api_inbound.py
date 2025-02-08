@@ -1,1 +1,1 @@
-shortened_code
+def example_function():\n    return 'Hello, World!'
