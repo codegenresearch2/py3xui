@@ -1,1 +1,0 @@
-def sum_numbers(numbers: list[int]) -> int:"""This function takes a list of integers and returns their sum.""""
