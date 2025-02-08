@@ -10,7 +10,7 @@ logger = Logger(__name__)
 
 class ClientApi(BaseApi):
     def get_by_email(self, email: str) -> Client | None:
-        """This route is used to retrieve information about a specific client based on their email.
+        '''This route is used to retrieve information about a specific client based on their email.
         This endpoint provides details such as traffic statistics and other relevant information
         related to the client.
 
@@ -26,10 +26,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            client: py3xui.Client = api.get_by_email("email")"
-
-        # pylint: disable=line-too-long
-
+            client = api.client.get_by_email("email")
+        '''
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
 
@@ -39,13 +37,13 @@ class ClientApi(BaseApi):
         response = self._get(url, headers)
 
         client_json = response.json().get(ApiFields.OBJ)
-        if client_json is None:
+        if not client_json:
             logger.warning("No client found for email: %s", email)
             return None
         return Client.model_validate(client_json)
 
     def get_ips(self, email: str) -> str | None:
-        """This route is used to retrieve the IP records associated with a specific client
+        '''This route is used to retrieve the IP records associated with a specific client
         identified by their email.
 
         `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9>`_
@@ -60,10 +58,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            ips = api.get_ips("email")"
-
-        # pylint: disable=line-too-long
-
+            ips = api.client.get_ips("email")
+        '''
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -76,7 +72,7 @@ class ClientApi(BaseApi):
         return ips_json if ips_json != ApiFields.NO_IP_RECORD else None
 
     def add(self, inbound_id: int, clients: list[Client]):
-        """Add clients to an inbound.
+        '''Add clients to an inbound.
 
         Args:
             inbound_id (int): The ID of the inbound to which clients will be added.
@@ -87,10 +83,8 @@ class ClientApi(BaseApi):
 
             api = py3xui.Api.from_env()
             clients = [...]  # List of Client objects
-            api.client.add(inbound_id, clients)"
-
-        # pylint: disable=line-too-long
-
+            api.client.add(inbound_id, clients)
+        '''
         endpoint = "panel/api/inbounds/addClient"
         headers = {"Accept": "application/json"}
 
@@ -103,7 +97,7 @@ class ClientApi(BaseApi):
         logger.info("Client added successfully.")
 
     def update(self, client_uuid: str, client: Client) -> None:
-        """Update a client.
+        '''Update a client.
 
         Args:
             client_uuid (str): The UUID of the client to update.
@@ -114,8 +108,8 @@ class ClientApi(BaseApi):
 
             api = py3xui.Api.from_env()
             updated_client = ...  # Updated Client object
-            api.client.update(client_uuid, updated_client)"
-
+            api.client.update(client_uuid, updated_client)
+        '''
         endpoint = f"panel/api/inbounds/updateClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -128,7 +122,7 @@ class ClientApi(BaseApi):
         logger.info("Client updated successfully.")
 
     def reset_ips(self, email: str) -> None:
-        """Reset the IP records for a client identified by their email.
+        '''Reset the IP records for a client identified by their email.
 
         Args:
             email (str): The email of the client whose IP records will be reset.
@@ -137,8 +131,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client.reset_ips(email)"
-
+            api.client.reset_ips(email)
+        '''
         endpoint = f"panel/api/inbounds/clearClientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -150,7 +144,7 @@ class ClientApi(BaseApi):
         logger.info("Client IPs reset successfully.")
 
     def reset_stats(self, inbound_id: int, email: str) -> None:
-        """Reset the traffic stats for a client identified by their email.
+        '''Reset the traffic stats for a client identified by their email.
 
         Args:
             inbound_id (int): The ID of the inbound to which the client belongs.
@@ -160,8 +154,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client.reset_stats(inbound_id, email)"
-
+            api.client.reset_stats(inbound_id, email)
+        '''
         endpoint = f"panel/api/inbounds/{inbound_id}/resetClientTraffic/{email}"
         headers = {"Accept": "application/json"}
 
@@ -173,7 +167,7 @@ class ClientApi(BaseApi):
         logger.info("Client stats reset successfully.")
 
     def delete(self, inbound_id: int, client_uuid: str) -> None:
-        """Delete a client.
+        '''Delete a client.
 
         Args:
             inbound_id (int): The ID of the inbound to which the client belongs.
@@ -183,8 +177,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client.delete(inbound_id, client_uuid)"
-
+            api.client.delete(inbound_id, client_uuid)
+        '''
         endpoint = f"panel/api/inbounds/{inbound_id}/delClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -196,7 +190,7 @@ class ClientApi(BaseApi):
         logger.info("Client deleted successfully.")
 
     def delete_depleted(self, inbound_id: int) -> None:
-        """Delete depleted clients from an inbound.
+        '''Delete depleted clients from an inbound.
 
         Args:
             inbound_id (int): The ID of the inbound from which depleted clients will be deleted.
@@ -205,8 +199,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client.delete_depleted(inbound_id)"
-
+            api.client.delete_depleted(inbound_id)
+        '''
         endpoint = f"panel/api/inbounds/delDepletedClients/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -218,7 +212,7 @@ class ClientApi(BaseApi):
         logger.info("Depleted clients deleted successfully.")
 
     def online(self) -> list[str]:
-        """Get a list of online clients.
+        '''Get a list of online clients.
 
         Returns:
             list[str]: A list of emails of online clients.
@@ -228,7 +222,7 @@ class ClientApi(BaseApi):
 
             api = py3xui.Api.from_env()
             online_clients = api.client.online()
-
+        '''
         endpoint = "panel/api/inbounds/onlines"
         headers = {"Accept": "application/json"}
 
