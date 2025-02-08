@@ -1,4 +1,4 @@
-"""This module contains the Inbound class, which represents an inbound connection in the XUI API."""
+This module contains the Inbound class, which represents an inbound connection in the XUI API.
 
 from typing import Any, List, Optional
 
