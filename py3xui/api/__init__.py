@@ -1,1 +1,1 @@
-from py3xui.api import ClientApi, DatabaseApi, InboundApi
+from py3xui.api.api_client import ClientApi\\" from py3xui.api.api_database import DatabaseApi\\\n from py3xui.api.api_inbound import InboundApi
