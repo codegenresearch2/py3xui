@@ -4,8 +4,8 @@ from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.inbound import Inbound
 
 
-class InboundApi(BaseApi):
-    """This class provides methods to interact with the inbounds in the XUI API."
+class AsyncInboundApi(BaseApi):
+    """This class provides methods to interact with the inbounds in the XUI API asynchronously."
 
     Attributes and Properties:
         host (str): The XUI host URL.
@@ -26,46 +26,52 @@ class InboundApi(BaseApi):
         reset_client_stats: Resets the statistics of a specific inbound.
         get_by_id: Retrieves a specific inbound by its ID.
 
-    Examples:
-        \"\"\"python
-        import py3xui
+    Examples:"
+python
+import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
+async def main():
+    api = await py3xui.AsyncApi.from_env()
+    await api.login()
 
-        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
-        \"\"\"
-    """
+    inbounds: List[py3xui.Inbound] = await api.inbound.get_list()
+    print(inbounds)
 
-    def get_list(self) -> list[Inbound]:
+await main()
+"""
+
+    async def get_list(self) -> List[Inbound]:
         """This route is used to retrieve a comprehensive list of all inbounds along with
         their associated client options and statistics."
 
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#b7c42b67-4362-44d3-bd61-ba7df0721802)
 
         Returns:
-            list[Inbound]: A list of inbounds.
+            List[Inbound]: A list of inbounds.
 
-        Examples:
-            \"\"\"python
-            import py3xui
+        Examples:"
+python
+import py3xui
 
-            api = py3xui.Api.from_env()
-            api.login()
+async def main():
+    api = await py3xui.AsyncApi.from_env()
+    await api.login()
 
-            inbounds: list[py3xui.Inbound] = api.inbound.get_list()
-            \"\"\"
-        """
-        endpoint = "panel/api/inbounds/list"
-        headers = {"Accept": "application/json"}
+    inbounds: List[py3xui.Inbound] = await api.inbound.get_list()
+    print(inbounds)
+
+await main()
+"""
+        endpoint = 'panel/api/inbounds/list'
+        headers = {'Accept': 'application/json'}
 
         url = self._url(endpoint)
-        self.logger.info("Getting inbounds...")        
+        self.logger.info('Getting inbounds...')
 
-        response = self._get(url, headers)
+        response = await self._get(url, headers)
 
         inbounds_json = response.json().get(ApiFields.OBJ)
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    # Add other methods similarly updated...
+    # Add other asynchronous methods similarly defined...
