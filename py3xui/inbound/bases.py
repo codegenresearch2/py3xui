@@ -1,1 +1,1 @@
-import json\\\nfrom pydantic import BaseModel, model_validator\\\\\n\\\\\nclass JsonStringModel(BaseModel):\\\\\\n    @model_validator(mode="before")\\\\\n    def model_validate(cls, values):\\\\\n        """Validates the input as a JSON string."""\\\\\n        if isinstance(values, str):\\\\\n            try:\\\\\n                return json.loads(values)\\\\\n            except json.JSONDecodeError:\\\\\n                pass\\\\\n        return values
+import json\\\\\nfrom pydantic import BaseModel, model_validator\\\\\n\\\\\n"""\\\\
