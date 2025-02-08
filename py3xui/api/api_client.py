@@ -1,5 +1,5 @@
 import json
-from typing import Any
+from typing import Any, Dict, List
 
 from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.client.client import Client
@@ -71,12 +71,12 @@ class ClientApi(BaseApi):
         ips_json = response.json().get(ApiFields.OBJ)
         return ips_json if ips_json != ApiFields.NO_IP_RECORD else None
 
-    def add(self, inbound_id: int, clients: list[Client]):
+    def add(self, inbound_id: int, clients: List[Client]):
         '''Add clients to an inbound.
 
         Args:
             inbound_id (int): The ID of the inbound to which clients will be added.
-            clients (list[Client]): A list of Client objects to be added.
+            clients (List[Client]): A list of Client objects to be added.
 
         Examples::
             import py3xui
