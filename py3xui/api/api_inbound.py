@@ -1,1 +1,0 @@
-python"># Function to add two numbers"
