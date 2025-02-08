@@ -49,7 +49,7 @@ class Inbound(BaseModel):
     client_stats: List[Client] = Field(default=[], alias=InboundFields.CLIENT_STATS)  # type: ignore
     tag: str = ""
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(populate_by_name=True,)
 
     def to_json(self) -> dict[str, Any]:
         """Converts the Inbound instance to a JSON-compatible dictionary for the XUI API."""
