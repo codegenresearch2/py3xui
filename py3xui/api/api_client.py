@@ -14,7 +14,7 @@ class ClientApi(BaseApi):
         This endpoint provides details such as traffic statistics and other relevant information
         related to the client.
 
-        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#9d0e5cd5-e6ac-4d72-abca-76cf75af5f00>`_
+        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#9d0e5cd5-e6ac-4d72-abca-76cf75af5f00>`_  # pylint: disable=line-too-long
 
         Args:
             email (str): The email of the client to retrieve.
@@ -46,7 +46,7 @@ class ClientApi(BaseApi):
         '''This route is used to retrieve the IP records associated with a specific client
         identified by their email.
 
-        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9>`_
+        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9>`_  # pylint: disable=line-too-long
 
         Args:
             email (str): The email of the client to retrieve.
@@ -71,12 +71,12 @@ class ClientApi(BaseApi):
         ips_json = response.json().get(ApiFields.OBJ)
         return ips_json if ips_json != ApiFields.NO_IP_RECORD else None
 
-    def add(self, inbound_id: int, clients: List[Client]):
+    def add(self, inbound_id: int, clients: list[Client]):
         '''Add clients to an inbound.
 
         Args:
             inbound_id (int): The ID of the inbound to which clients will be added.
-            clients (List[Client]): A list of Client objects to be added.
+            clients (list[Client]): A list of Client objects to be added.
 
         Examples::
             import py3xui
@@ -97,3 +97,4 @@ class ClientApi(BaseApi):
         logger.info("Client added successfully.")
 
     # Additional methods omitted for brevity
+}
