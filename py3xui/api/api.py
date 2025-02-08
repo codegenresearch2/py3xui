@@ -1,1 +1,1 @@
-def add(a, b):\"\"\"Returns the sum of two numbers.\"\"\"\\"\"
+def add(a: int, b: int) -> int:"""Returns the sum of two numbers."""\n    return a + b\n
