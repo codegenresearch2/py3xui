@@ -52,7 +52,7 @@ class Inbound(BaseModel):
     model_config = ConfigDict(populate_by_name=True,)
 
     def to_json(self) -> dict[str, Any]:
-        """Converts the Inbound instance to a JSON-compatible dictionary for the XUI API."""
+        """Converts the Inbound instance to a JSON-compatible dictionary for the XUI API."
         include = {
             InboundFields.REMARK,
             InboundFields.ENABLE,
