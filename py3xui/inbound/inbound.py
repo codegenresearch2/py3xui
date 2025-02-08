@@ -1,1 +1,1 @@
-from typing import Any\"""\"Module for representing inbound connections in the XUI system.\"""\"""\"Stores the fields returned by the XUI API for parsing.\"""\"""\
+from typing import Any\
