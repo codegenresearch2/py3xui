@@ -1,1 +1,1 @@
-def simple_function():\"\"\"return 'Hello, World!'\"\"\"}
+def simple_function():"""":return 'Hello, World!'"""}
