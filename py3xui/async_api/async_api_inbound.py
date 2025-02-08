@@ -1,1 +1,1 @@
-import unittest\n\\\nclass TestMyFunction(unittest.TestCase):\n    def test_addition(self):\n        self.assertEqual(my_function(2, 3), 5)\n\n    def test_subtraction(self):\n        self.assertEqual(my_function(5, 3), 2)\n\n    def test_multiplication(self):\n        self.assertEqual(my_function(2, 3), 6)\n\n    def test_division(self):\n        self.assertEqual(my_function(6, 3), 2)\n\nif __name__ == '__main__':\n    unittest.main()
+import logging\"\"
