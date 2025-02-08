@@ -10,7 +10,7 @@ logger = Logger(__name__)
 
 
 class ApiFields:
-    '''Stores the fields returned by the XUI API for parsing.'''    
+    '''Stores the fields returned by the XUI API for parsing."
     SUCCESS = "success"
     MSG = "msg"
     OBJ = "obj"
@@ -19,7 +19,9 @@ class ApiFields:
 
 
 class BaseApi:
-    '''This class provides a base API for interacting with the XUI API.'''    
+    '''This class provides a base API for interacting with the XUI API."
+
+    # pylint: disable=too-few-public-methods
 
     def __init__(self, host: str, username: str, password: str):
         '''Initializes the BaseApi instance.
@@ -85,13 +87,13 @@ class BaseApi:
 
         url = self._url(endpoint)
         data = {"username": self.username, "password": self.password}
-        logger.info("Logging in with username: %%s", self.username)
+        logger.info("Logging in with username: %s", self.username)
 
         response = self._post(url, headers, data)
         cookie: str | None = response.cookies.get("session")
         if not cookie:
             raise ValueError("No session cookie found, something wrong with the login...")
-        logger.info("Session cookie successfully retrieved for username: %%s", self.username)
+        logger.info("Session cookie successfully retrieved for username: %s", self.username)
         self.session = cookie
 
     def _check_response(self, response: requests.Response) -> None:
