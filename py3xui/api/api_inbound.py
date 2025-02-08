@@ -1,0 +1,1 @@
+Here is a shorter version of the code snippet.
