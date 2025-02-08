@@ -14,7 +14,7 @@ class ClientApi(BaseApi):
         This endpoint provides details such as traffic statistics and other relevant information
         related to the client.
 
-        [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#9d0e5cd5-e6ac-4d72-abca-76cf75af5f00)
+        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#9d0e5cd5-e6ac-4d72-abca-76cf75af5f00>`_ 
 
         Args:
             email (str): The email of the client to retrieve.
@@ -22,14 +22,12 @@ class ClientApi(BaseApi):
         Returns:
             Client | None: The client object if found, otherwise None.
 
-        Examples:
-            ```python
+        Examples::
             import py3xui
 
             api = py3xui.Api.from_env()
-            client: py3xui.Client = api.client.get_by_email("email")
-            ```
-        """  # pylint: disable=line-too-long
+            client: py3xui.Client = api.get_by_email("email")
+        """
 
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
@@ -40,16 +38,13 @@ class ClientApi(BaseApi):
         response = self._get(url, headers)
 
         client_json = response.json().get(ApiFields.OBJ)
-        if not client_json:
-            logger.warning("No client found for email: %s", email)
-            return None
-        return Client.model_validate(client_json)
+        return Client.model_validate(client_json) if client_json else None
 
     def get_ips(self, email: str) -> str | None:
         """This route is used to retrieve the IP records associated with a specific client
         identified by their email.
 
-        [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9)
+        `Source documentation <https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9>`_ 
 
         Args:
             email (str): The email of the client to retrieve.
@@ -57,14 +52,13 @@ class ClientApi(BaseApi):
         Returns:
             str | None: The client IPs if found, otherwise None.
 
-        Examples:
-            ```python
+        Examples::
             import py3xui
 
             api = py3xui.Api.from_env()
-            ips = api.client.get_ips("email")
-            ```
-        """  # pylint: disable=line-too-long
+            ips = api.get_ips("email")
+
+        """
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -81,12 +75,10 @@ class ClientApi(BaseApi):
         headers = {"Accept": "application/json"}
 
         url = self._url(endpoint)
-        settings = {
-            "clients": [
-                client.model_dump(by_alias=True, exclude_defaults=True) for client in clients
-            ]
-        }
-        data = {"id": inbound_id, "settings": json.dumps(settings)}
+        settings = [
+            client.model_dump(by_alias=True, exclude_defaults=True) for client in clients
+        ]
+        data = {"id": inbound_id, "settings": json.dumps({"clients": settings})}
         logger.info("Adding %s clients to inbound with ID: %s", len(clients), inbound_id)
 
         self._post(url, headers, data)
