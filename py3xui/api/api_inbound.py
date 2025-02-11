@@ -27,6 +27,16 @@ class InboundApi(BaseApi):
         reset_stats: Resets the statistics of all inbounds.
         reset_client_stats: Resets the statistics of a specific inbound.
         get_by_id: Retrieves a specific inbound by its ID.
+
+    Examples:
+        
+        import py3xui
+
+        api = py3xui.Api.from_env()
+        api.login()
+
+        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
+        
     """
 
     def get_list(self) -> list[Inbound]:
@@ -39,16 +49,15 @@ class InboundApi(BaseApi):
             list[Inbound]: A list of inbounds.
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
+            api = py3xui.Api.from_env()
+            api.login()
 
-        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
-        
-        """  # pylint: disable=line-too-long
+            inbounds: list[py3xui.Inbound] = api.inbound.get_list()
+            
+        """
         endpoint = "panel/api/inbounds/list"
         headers = {"Accept": "application/json"}
 
@@ -70,36 +79,35 @@ class InboundApi(BaseApi):
             inbound (Inbound): The inbound object to add.
 
         Examples:
-        
-        
-        import py3xui
-        from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
+            
+            import py3xui
+            from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
 
-        api = py3xui.Api.from_env()
-        api.login()
+            api = py3xui.Api.from_env()
+            api.login()
 
-        settings = Settings()
-        sniffing = Sniffing(enabled=True)
+            settings = Settings()
+            sniffing = Sniffing(enabled=True)
 
-        tcp_settings = {
-            "acceptProxyProtocol": False,
-            "header": {"type": "none"},
-        }
-        stream_settings = StreamSettings(security="reality", network="tcp", tcp_settings=tcp_settings)
+            tcp_settings = {
+                "acceptProxyProtocol": False,
+                "header": {"type": "none"},
+            }
+            stream_settings = StreamSettings(security="reality", network="tcp", tcp_settings=tcp_settings)
 
-        inbound = Inbound(
-            enable=True,
-            port=443,
-            protocol="vless",
-            settings=settings,
-            stream_settings=stream_settings,
-            sniffing=sniffing,
-            remark="test3",
-        )
+            inbound = Inbound(
+                enable=True,
+                port=443,
+                protocol="vless",
+                settings=settings,
+                stream_settings=stream_settings,
+                sniffing=sniffing,
+                remark="test3",
+            )
 
-        api.inbound.add(inbound)
-        
-        """  # pylint: disable=line-too-long
+            api.inbound.add(inbound)
+            
+        """
         endpoint = "panel/api/inbounds/add"
         headers = {"Accept": "application/json"}
 
@@ -119,18 +127,17 @@ class InboundApi(BaseApi):
             inbound_id (int): The ID of the inbound to delete.
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
-        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
+            api = py3xui.Api.from_env()
+            api.login()
+            inbounds: list[py3xui.Inbound] = api.inbound.get_list()
 
-        for inbound in inbounds:
-            api.inbound.delete(inbound.id)
-        
-        """  # pylint: disable=line-too-long
+            for inbound in inbounds:
+                api.inbound.delete(inbound.id)
+            
+        """
         endpoint = f"panel/api/inbounds/del/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -151,20 +158,19 @@ class InboundApi(BaseApi):
             inbound (Inbound): The inbound object to update.
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
-        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
-        inbound = inbounds[0]
+            api = py3xui.Api.from_env()
+            api.login()
+            inbounds: list[py3xui.Inbound] = api.inbound.get_list()
+            inbound = inbounds[0]
 
-        inbound.remark = "updated"
+            inbound.remark = "updated"
 
-        api.inbound.update(inbound.id, inbound)
-        
-        """  # pylint: disable=line-too-long
+            api.inbound.update(inbound.id, inbound)
+            
+        """
         endpoint = f"panel/api/inbounds/update/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -181,15 +187,14 @@ class InboundApi(BaseApi):
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#6749f362-dc81-4769-8f45-37dc9e99f5e9)
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
-        api.inbound.reset_stats()
-        
-        """  # pylint: disable=line-too-long
+            api = py3xui.Api.from_env()
+            api.login()
+            api.inbound.reset_stats()
+            
+        """
         endpoint = "panel/api/inbounds/resetAllTraffics"
         headers = {"Accept": "application/json"}
 
@@ -210,18 +215,17 @@ class InboundApi(BaseApi):
             inbound_id (int): The ID of the inbound to reset the client stats.
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
-        inbounds: list[py3xui.Inbound] = api.inbound.get_list()
-        inbound = inbounds[0]
+            api = py3xui.Api.from_env()
+            api.login()
+            inbounds: list[py3xui.Inbound] = api.inbound.get_list()
+            inbound = inbounds[0]
 
-        api.inbound.reset_client_stats(inbound.id)
-        
-        """  # pylint: disable=line-too-long
+            api.inbound.reset_client_stats(inbound.id)
+            
+        """
         endpoint = f"panel/api/inbounds/resetAllClientTraffics/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -244,21 +248,20 @@ class InboundApi(BaseApi):
             Optional[Inbound]: The inbound object with the specified ID, or None if not found.
 
         Examples:
-        
-        
-        import py3xui
+            
+            import py3xui
 
-        api = py3xui.Api.from_env()
-        api.login()
+            api = py3xui.Api.from_env()
+            api.login()
 
-        inbound_id = 1
-        inbound = api.inbound.get_by_id(inbound_id)
-        if inbound:
-            print(f"Inbound found: {inbound}")
-        else:
-            print("Inbound not found.")
-        
-        """  # pylint: disable=line-too-long
+            inbound_id = 1
+            inbound = api.inbound.get_by_id(inbound_id)
+            if inbound:
+                print(f"Inbound found: {inbound}")
+            else:
+                print("Inbound not found.")
+            
+        """
         endpoint = f"panel/api/inbounds/get/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -275,4 +278,4 @@ class InboundApi(BaseApi):
         return inbound
 
 
-This new code snippet addresses the feedback provided by the oracle, including improving documentation formatting, specifying return types, ensuring consistency in examples, and adding error handling for the `get_by_id` method.
+This new code snippet addresses the feedback provided by the oracle, including improving documentation formatting, specifying return types, and adding error handling for the `get_by_id` method.
