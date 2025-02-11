@@ -36,9 +36,9 @@ class Inbound(BaseModel):
     """Represents an inbound connection in the XUI system.
 
     Attributes:
-        enable (bool): Indicates whether the inbound is enabled.
-        port (int): The port number for the inbound connection.
-        protocol (str): The protocol used for the inbound connection.
+        enable (bool): Indicates whether the inbound is enabled. This is a required field.
+        port (int): The port number for the inbound connection. This is a required field.
+        protocol (str): The protocol used for the inbound connection. This is a required field.
         settings (Settings): The settings for the inbound connection. This is a required field.
         stream_settings (StreamSettings): The stream settings for the inbound connection. This is a required field.
         sniffing (Sniffing): The sniffing settings for the inbound connection. This is a required field.
