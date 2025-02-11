@@ -1,5 +1,5 @@
 """
-This module contains the Sniffing class, which is used to parse the response from the XUI API.
+This module contains the Sniffing class for parsing the XUI API response.
 """
 
 from pydantic import Field
