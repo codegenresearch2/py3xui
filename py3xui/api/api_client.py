@@ -5,6 +5,7 @@ import pytest
 from py3xui import Api, Client, Inbound
 from py3xui.api.api_base import ApiFields
 from py3xui.client.client_api import ClientApi
+from logging import Logger
 
 RESPONSES_DIR = "tests/responses"
 HOST = "http://localhost"
@@ -12,6 +13,8 @@ USERNAME = "admin"
 PASSWORD = "admin"
 SESSION = "abc123"
 EMAIL = "alhtim2x"
+
+logger = Logger(__name__)
 
 class TestClientApi:
     """
