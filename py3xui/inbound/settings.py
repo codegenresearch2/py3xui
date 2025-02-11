@@ -1,5 +1,5 @@
 """
-This module contains classes for parsing settings from the XUI API.
+This module contains the `Settings` class for parsing settings from the XUI API.
 """
 
 from py3xui.client.client import Client
@@ -30,7 +30,7 @@ class Settings(JsonStringModel):
 
 I've made the following changes based on the feedback:
 
-1. Updated the module docstring to be more concise and focused on the purpose of the `Settings` class.
-2. Simplified the `SettingsFields` class docstring.
-3. Added a pylint directive to disable a specific warning, aligning with the gold code.
-4. Simplified the descriptions of the attributes in the `Settings` class to be more concise and directly related to their purpose.
+1. Updated the module docstring to mention the `Settings` class and its purpose related to parsing the JSON response from the XUI API.
+2. Added a pylint directive to disable the specific warning about having too few public methods.
+3. Simplified the description of the `Settings` class to be more concise and directly related to its purpose.
+4. Simplified the descriptions of the attributes in the `Settings` class to be more straightforward.
