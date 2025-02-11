@@ -1,5 +1,5 @@
 import json
-from typing import Any
+from typing import Any, Optional
 
 from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.client.client import Client
@@ -9,7 +9,7 @@ logger = Logger(__name__)
 
 
 class ClientApi(BaseApi):
-    def get_by_email(self, email: str) -> Client | None:
+    def get_by_email(self, email: str) -> Optional[Client]:
         """This route is used to retrieve information about a specific client based on their email.
         This endpoint provides details such as traffic statistics and other relevant information
         related to the client.
@@ -20,14 +20,14 @@ class ClientApi(BaseApi):
             email (str): The email of the client to retrieve.
 
         Returns:
-            Client | None: The client object if found, otherwise None.
+            Optional[Client]: The client object if found, otherwise None.
 
         Examples::
             import py3xui
 
             api = py3xui.Api.from_env()
-            client = api.client_api.get_by_email("email")
-        """  # pylint: disable=line-too-long
+            client: Optional[py3xui.Client] = api.client_api.get_by_email("email@example.com")
+        """
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
 
@@ -42,7 +42,7 @@ class ClientApi(BaseApi):
             return None
         return Client.model_validate(client_json)
 
-    def get_ips(self, email: str) -> str | None:
+    def get_ips(self, email: str) -> Optional[str]:
         """This route is used to retrieve the IP records associated with a specific client
         identified by their email.
 
@@ -52,14 +52,14 @@ class ClientApi(BaseApi):
             email (str): The email of the client to retrieve.
 
         Returns:
-            str | None: The client IPs if found, otherwise None.
+            Optional[str]: The client IPs if found, otherwise None.
 
         Examples::
             import py3xui
 
             api = py3xui.Api.from_env()
-            ips = api.client_api.get_ips("email")
-        """  # pylint: disable=line-too-long
+            ips: Optional[str] = api.client_api.get_ips("email@example.com")
+        """
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -82,9 +82,9 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            clients = [py3xui.Client(...), py3xui.Client(...)]
+            clients: list[py3xui.Client] = [py3xui.Client(...), py3xui.Client(...)]
             api.client_api.add(1, clients)
-        """  # pylint: disable=line-too-long
+        """
         endpoint = "panel/api/inbounds/addClient"
         headers = {"Accept": "application/json"}
 
@@ -111,9 +111,9 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            updated_client = py3xui.Client(...)
+            updated_client: py3xui.Client = py3xui.Client(...)
             api.client_api.update("client_uuid", updated_client)
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/updateClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -135,8 +135,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client_api.reset_ips("email")
-        """  # pylint: disable=line-too-long
+            api.client_api.reset_ips("email@example.com")
+        """
         endpoint = f"panel/api/inbounds/clearClientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -158,8 +158,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            api.client_api.reset_stats(1, "email")
-        """  # pylint: disable=line-too-long
+            api.client_api.reset_stats(1, "email@example.com")
+        """
         endpoint = f"panel/api/inbounds/{inbound_id}/resetClientTraffic/{email}"
         headers = {"Accept": "application/json"}
 
@@ -182,7 +182,7 @@ class ClientApi(BaseApi):
 
             api = py3xui.Api.from_env()
             api.client_api.delete(1, "client_uuid")
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/{inbound_id}/delClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -204,7 +204,7 @@ class ClientApi(BaseApi):
 
             api = py3xui.Api.from_env()
             api.client_api.delete_depleted(1)
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/delDepletedClients/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -225,8 +225,8 @@ class ClientApi(BaseApi):
             import py3xui
 
             api = py3xui.Api.from_env()
-            online_clients = api.client_api.online()
-        """  # pylint: disable=line-too-long
+            online_clients: list[str] = api.client_api.online()
+        """
         endpoint = "panel/api/inbounds/onlines"
         headers = {"Accept": "application/json"}
 
