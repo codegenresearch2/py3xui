@@ -57,9 +57,9 @@ class Api:
 
         Notes:
             The following environment variables must be set:
-                - xui_host: The host URL for the XUI API.
-                - xui_username: The username for authentication.
-                - xui_password: The password for authentication.
+                - XUI_HOST: The host URL for the XUI API.
+                - XUI_USERNAME: The username for authentication.
+                - XUI_PASSWORD: The password for authentication.
         """
         host = env.xui_host()
         username = env.xui_username()
