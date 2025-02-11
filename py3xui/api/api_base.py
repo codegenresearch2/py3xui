@@ -1,10 +1,11 @@
 """
-This module contains the base class for interacting with the XUI API.
+This module provides the base class for interacting with the XUI API.
 """
 
 from __future__ import annotations
 from typing import Any, Callable
 import requests
+from time import sleep
 from py3xui.utils import Logger, env
 
 logger = Logger(__name__)
