@@ -3,11 +3,12 @@ clients in the XUI API asynchronously."""
 
 from typing import Any, Optional
 import logging
+import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-class AsyncInboundApi:
+class AsyncInboundApi(AsyncBaseApi):
     """This class provides methods to interact with the inbounds in the XUI API.
 
     Attributes and Properties:
@@ -22,12 +23,12 @@ class AsyncInboundApi:
 
     Public Methods:
         get_list: Retrieves a list of inbounds.
+        get_by_id: Retrieves a specific inbound by its ID.
         add: Adds a new inbound.
         delete: Deletes an inbound.
         update: Updates an inbound.
         reset_stats: Resets the statistics of all inbounds.
         reset_client_stats: Resets the statistics of a specific inbound.
-        get_by_id: Retrieves a specific inbound by its ID.
 
     Examples:
         
@@ -41,14 +42,7 @@ class AsyncInboundApi:
     """
 
     def __init__(self, host: str, username: str, password: str, token: Optional[str] = None, use_tls_verify: bool = True, custom_certificate_path: Optional[str] = None, session: Optional[requests.Session] = None, max_retries: int = 3):
-        self.host = host
-        self.username = username
-        self.password = password
-        self.token = token
-        self.use_tls_verify = use_tls_verify
-        self.custom_certificate_path = custom_certificate_path
-        self.session = session if session else requests.Session()
-        self.max_retries = max_retries
+        super().__init__(host, username, password, token, use_tls_verify, custom_certificate_path, session, max_retries)
         self.logger = logging.getLogger(__name__)
 
     async def get_list(self) -> list[Inbound]:
@@ -82,6 +76,43 @@ class AsyncInboundApi:
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
+    async def get_by_id(self, inbound_id: int) -> Inbound:
+        """This route is used to retrieve statistics and details for a specific inbound connection
+        identified by specified ID. This includes information about the inbound itself, its
+        statistics, and the clients connected to it.
+        If the inbound is not found, the method will raise an exception.
+
+        [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
+
+        Arguments:
+            inbound_id (int): The ID of the inbound to retrieve.
+
+        Returns:
+            Inbound: The inbound object if found, otherwise None.
+
+        Examples:
+            
+            import py3xui
+
+            api = py3xui.AsyncApi.from_env()
+            await api.login()
+
+            inbound_id = 1
+            inbound = await api.inbound.get_by_id(inbound_id)
+            
+        """
+        endpoint = f"panel/api/inbounds/get/{inbound_id}"
+        headers = {"Accept": "application/json"}
+
+        url = self._url(endpoint)
+        self.logger.info("Getting inbound by ID: %s", inbound_id)
+
+        response = await self._get(url, headers)
+
+        inbound_json = response.json().get(ApiFields.OBJ)
+        inbound = Inbound.model_validate(inbound_json)
+        return inbound
+
     async def add(self, inbound: Inbound) -> None:
         """This route is used to add a new inbound configuration.
 
@@ -93,6 +124,7 @@ class AsyncInboundApi:
         Examples:
             
             import py3xui
+            from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
 
             api = py3xui.AsyncApi.from_env()
             await api.login()
@@ -245,40 +277,3 @@ class AsyncInboundApi:
 
         await self._post(url, headers, data)
         self.logger.info("Inbound client stats reset successfully.")
-
-    def get_by_id(self, inbound_id: int) -> Inbound:
-        """This route is used to retrieve statistics and details for a specific inbound connection
-        identified by specified ID. This includes information about the inbound itself, its
-        statistics, and the clients connected to it.
-        If the inbound is not found, the method will raise an exception.
-
-        [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
-
-        Arguments:
-            inbound_id (int): The ID of the inbound to retrieve.
-
-        Returns:
-            Inbound | None: The inbound object if found, otherwise None.
-
-        Examples:
-            
-            import py3xui
-
-            api = py3xui.AsyncApi.from_env()
-            await api.login()
-
-            inbound_id = 1
-            inbound = await api.inbound.get_by_id(inbound_id)
-            
-        """  # pylint: disable=line-too-long
-        endpoint = f"panel/api/inbounds/get/{inbound_id}"
-        headers = {"Accept": "application/json"}
-
-        url = self._url(endpoint)
-        self.logger.info("Getting inbound by ID: %s", inbound_id)
-
-        response = self._get(url, headers)
-
-        inbound_json = response.json().get(ApiFields.OBJ)
-        inbound = Inbound.model_validate(inbound_json)
-        return inbound
