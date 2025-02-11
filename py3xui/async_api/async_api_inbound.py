@@ -1,12 +1,16 @@
-"""This module contains the AsyncInboundApi class which provides methods to interact with the
+"""This module contains the InboundApi class which provides methods to interact with the
 clients in the XUI API asynchronously."""
 
-from typing import Any
+from typing import Any, Optional
+import logging
 
 from py3xui.api.api_base import ApiFields
 from py3xui.async_api.async_api_base import AsyncBaseApi
 from py3xui.inbound import Inbound
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class AsyncInboundApi(AsyncBaseApi):
     """This class provides methods to interact with the inbounds in the XUI API.
@@ -28,6 +32,7 @@ class AsyncInboundApi(AsyncBaseApi):
         update: Updates an inbound.
         reset_stats: Resets the statistics of all inbounds.
         reset_client_stats: Resets the statistics of a specific inbound.
+        get_by_id: Retrieves an inbound by its ID.
 
     Examples:
         
@@ -55,6 +60,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
             api = py3xui.AsyncApi.from_env()
             await api.login()
+
             inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
             
         """  # pylint: disable=line-too-long
@@ -62,13 +68,60 @@ class AsyncInboundApi(AsyncBaseApi):
         headers = {"Accept": "application/json"}
 
         url = self._url(endpoint)
-        self.logger.info("Getting inbounds...")
+        logger.info("Getting inbounds...")
 
         response = await self._get(url, headers)
 
         inbounds_json = response.json().get(ApiFields.OBJ)
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
+
+    async def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
+        """This route is used to retrieve statistics and details for a specific inbound connection
+        identified by specified ID. This includes information about the inbound itself, its
+        statistics, and the clients connected to it.
+        If the inbound is not found, the method will raise an exception.
+
+        [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
+
+        Arguments:
+            inbound_id (int): The ID of the inbound to retrieve.
+
+        Returns:
+            Inbound | None: The inbound object if found, otherwise None.
+
+        Raises:
+            ValueError: If the inbound with the specified ID is not found.
+
+        Examples:
+            
+            import py3xui
+
+            api = py3xui.AsyncApi.from_env()
+            await api.login()
+
+            inbound_id = 1
+            inbound = await api.inbound.get_by_id(inbound_id)
+            if inbound:
+                print(f"Inbound found: {inbound}")
+            else:
+                print("Inbound not found.")
+            
+        """  # pylint: disable=line-too-long
+        endpoint = f"panel/api/inbounds/get/{inbound_id}"
+        headers = {"Accept": "application/json"}
+
+        url = self._url(endpoint)
+        logger.info("Getting inbound by ID: %s", inbound_id)
+
+        response = await self._get(url, headers)
+
+        inbound_json = response.json().get(ApiFields.OBJ)
+        if inbound_json is None:
+            logger.error("Inbound with ID %s not found", inbound_id)
+            raise ValueError(f"Inbound with ID {inbound_id} not found")
+        inbound = Inbound.model_validate(inbound_json)
+        return inbound
 
     async def add(self, inbound: Inbound) -> None:
         """This route is used to add a new inbound configuration.
@@ -81,6 +134,7 @@ class AsyncInboundApi(AsyncBaseApi):
         Examples:
             
             import py3xui
+            from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
 
             api = py3xui.AsyncApi.from_env()
             await api.login()
@@ -111,10 +165,10 @@ class AsyncInboundApi(AsyncBaseApi):
 
         url = self._url(endpoint)
         data = inbound.to_json()
-        self.logger.info("Adding inbound: %s", inbound)
+        logger.info("Adding inbound: %s", inbound)
 
         await self._post(url, headers, data)
-        self.logger.info("Inbound added successfully.")
+        logger.info("Inbound added successfully.")
 
     async def delete(self, inbound_id: int) -> None:
         """This route is used to delete an inbound identified by its ID.
@@ -125,7 +179,6 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to delete.
 
         Examples:
-
             
             import py3xui
 
@@ -143,9 +196,9 @@ class AsyncInboundApi(AsyncBaseApi):
         url = self._url(endpoint)
         data: dict[str, Any] = {}
 
-        self.logger.info("Deleting inbound with ID: %s", inbound_id)
+        logger.info("Deleting inbound with ID: %s", inbound_id)
         await self._post(url, headers, data)
-        self.logger.info("Inbound deleted successfully.")
+        logger.info("Inbound deleted successfully.")
 
     async def update(self, inbound_id: int, inbound: Inbound) -> None:
         """This route is used to update an existing inbound identified by its ID.
@@ -175,10 +228,10 @@ class AsyncInboundApi(AsyncBaseApi):
 
         url = self._url(endpoint)
         data = inbound.to_json()
-        self.logger.info("Updating inbound: %s", inbound)
+        logger.info("Updating inbound: %s", inbound)
 
         await self._post(url, headers, data)
-        self.logger.info("Inbound updated successfully.")
+        logger.info("Inbound updated successfully.")
 
     async def reset_stats(self) -> None:
         """This route is used to reset the traffic statistics for all inbounds within the system.
@@ -199,10 +252,10 @@ class AsyncInboundApi(AsyncBaseApi):
 
         url = self._url(endpoint)
         data: dict[str, Any] = {}
-        self.logger.info("Resetting inbounds stats...")
+        logger.info("Resetting inbounds stats...")
 
         await self._post(url, headers, data)
-        self.logger.info("Inbounds stats reset successfully.")
+        logger.info("Inbounds stats reset successfully.")
 
     async def reset_client_stats(self, inbound_id: int) -> None:
         """This route is used to reset the traffic statistics for all clients associated with a
@@ -230,7 +283,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
         url = self._url(endpoint)
         data: dict[str, Any] = {}
-        self.logger.info("Resetting inbound client stats for ID: %s", inbound_id)
+        logger.info("Resetting inbound client stats for ID: %s", inbound_id)
 
         await self._post(url, headers, data)
-        self.logger.info("Inbound client stats reset successfully.")
+        logger.info("Inbound client stats reset successfully.")
