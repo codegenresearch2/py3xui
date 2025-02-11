@@ -6,6 +6,7 @@ from py3xui.client.client import Client
 from py3xui.inbound.bases import JsonStringModel
 
 
+# pylint: disable=too-few-public-methods
 class SettingsFields:
     """Stores the fields returned by the XUI API for parsing."""
 
@@ -16,12 +17,12 @@ class SettingsFields:
 
 class Settings(JsonStringModel):
     """
-    Class for parsing settings from the XUI API.
+    Class representing the settings for an inbound connection.
 
     Attributes:
-        clients (List[Client]): List of Client objects.
-        decryption (str): String representing the decryption settings.
-        fallbacks (List): List of fallbacks.
+        clients (List[Client]): List of Client objects (optional).
+        decryption (str): String representing the decryption settings (optional).
+        fallbacks (list): List of fallbacks (optional).
     """
 
     clients: List[Client] = []
@@ -30,5 +31,5 @@ class Settings(JsonStringModel):
     decryption: str = ""
     """String representing the decryption settings."""
 
-    fallbacks: List = []
+    fallbacks: list = []
     """List of fallbacks."""
