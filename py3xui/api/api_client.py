@@ -8,7 +8,7 @@ logger = Logger(__name__)
 
 
 class ClientApi(BaseApi):
-    def get_by_email(self, email: str) -> Client | None:
+    def get_by_email(self, email: str) -> Optional[Client]:
         """Retrieves information about a specific client based on their email.
 
         This endpoint provides details such as traffic statistics and other relevant information
@@ -18,7 +18,7 @@ class ClientApi(BaseApi):
             email (str): The email of the client to retrieve.
 
         Returns:
-            Client | None: The client object if found, otherwise None.
+            Optional[Client]: The client object if found, otherwise None.
 
         Examples:
             
