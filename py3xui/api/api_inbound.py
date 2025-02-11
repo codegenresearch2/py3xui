@@ -234,7 +234,7 @@ class InboundApi(BaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Inbound: The inbound object if found, otherwise raises an exception.
+            Inbound: The inbound object if found, otherwise raises a ValueError.
 
         Examples:
             
@@ -247,7 +247,7 @@ class InboundApi(BaseApi):
             try:
                 inbound = api.inbound.get_by_id(inbound_id)
                 print(f"Inbound ID {inbound_id} found: {inbound}")
-            except Exception as e:
+            except ValueError as e:
                 print(f"Inbound ID {inbound_id} not found: {e}")
             
         """  # pylint: disable=line-too-long
