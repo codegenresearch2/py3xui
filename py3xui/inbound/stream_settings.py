@@ -29,22 +29,22 @@ class StreamSettings(JsonStringModel):
     Attributes:
         security (str): The security settings for the inbound connection. Required.
         network (str): The network settings for the inbound connection. Required.
-        tcp_settings (dict): The TCP settings for the inbound connection. Optional. Default is an empty dictionary.
-        external_proxy (list): The external proxy settings for the inbound connection. Optional. Default is an empty list.
-        reality_settings (dict): The reality settings for the inbound connection. Optional. Default is an empty dictionary.
-        xtls_settings (dict): The xtls settings for the inbound connection. Optional. Default is an empty dictionary.
-        tls_settings (dict): The TLS settings for the inbound connection. Optional. Default is an empty dictionary.
+        tcp_settings (dict): The TCP settings for the inbound connection. Optional.
+        external_proxy (list): The external proxy settings for the inbound connection. Optional.
+        reality_settings (dict): The reality settings for the inbound connection. Optional.
+        xtls_settings (dict): The xtls settings for the inbound connection. Optional.
+        tls_settings (dict): The TLS settings for the inbound connection. Optional.
     """
 
     security: str
     network: str
-    tcp_settings: dict = Field(default={}, alias=StreamSettingsFields.TCP_SETTINGS)  # type: ignore
+    tcp_settings: dict = Field(default_factory=dict)  # type: ignore
 
-    external_proxy: list = Field(default=[], alias=StreamSettingsFields.EXTERNAL_PROXY)  # type: ignore
+    external_proxy: list = Field(default_factory=list)  # type: ignore
 
-    reality_settings: dict = Field(default={}, alias=StreamSettingsFields.REALITY_SETTINGS)  # type: ignore
-    xtls_settings: dict = Field(default={}, alias=StreamSettingsFields.XTLS_SETTINGS)  # type: ignore
-    tls_settings: dict = Field(default={}, alias=StreamSettingsFields.TLS_SETTINGS)  # type: ignore
+    reality_settings: dict = Field(default_factory=dict)  # type: ignore
+    xtls_settings: dict = Field(default_factory=dict)  # type: ignore
+    tls_settings: dict = Field(default_factory=dict)  # type: ignore
 
     model_config = ConfigDict(
         populate_by_name=True,
