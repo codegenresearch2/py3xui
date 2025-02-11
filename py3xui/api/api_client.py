@@ -10,27 +10,6 @@ logger = Logger(__name__)
 
 class ClientApi(BaseApi):
     def get_by_email(self, email: str) -> Client | None:
-        """This route is used to retrieve information about a specific client based on their email.
-        This endpoint provides details such as traffic statistics and other relevant information
-        related to the client.
-
-        [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#9d0e5cd5-e6ac-4d72-abca-76cf75af5f00)
-
-        Args:
-            email (str): The email of the client to retrieve.
-
-        Returns:
-            Client | None: The client object if found, otherwise None.
-
-        Examples:
-            ```python
-            import py3xui
-
-            api = py3xui.Api.from_env()
-            client: py3xui.Client = api.client.get_by_email("email")
-            ```
-        """  # pylint: disable=line-too-long
-
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
 
@@ -46,25 +25,6 @@ class ClientApi(BaseApi):
         return Client.model_validate(client_json)
 
     def get_ips(self, email: str) -> str | None:
-        """This route is used to retrieve the IP records associated with a specific client
-        identified by their email.
-
-        [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#06f1214c-dbb0-49f2-81b5-8e924abd19a9)
-
-        Args:
-            email (str): The email of the client to retrieve.
-
-        Returns:
-            str | None: The client IPs if found, otherwise None.
-
-        Examples:
-            ```python
-            import py3xui
-
-            api = py3xui.Api.from_env()
-            ips = api.client.get_ips("email")
-            ```
-        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
 
