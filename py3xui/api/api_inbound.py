@@ -26,6 +26,7 @@ class InboundApi(BaseApi):
         update: Updates an inbound.
         reset_stats: Resets the statistics of all inbounds.
         reset_client_stats: Resets the statistics of a specific inbound.
+        get_by_id: Retrieves an inbound by its ID.
 
     Examples:
         
@@ -53,7 +54,6 @@ class InboundApi(BaseApi):
 
             api = py3xui.Api.from_env()
             api.login()
-
             inbounds: list[py3xui.Inbound] = api.inbound.get_list()
             
         """  # pylint: disable=line-too-long
@@ -235,3 +235,42 @@ class InboundApi(BaseApi):
 
         self._post(url, headers, data)
         self.logger.info("Inbound client stats reset successfully.")
+
+    def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
+        """This method retrieves an inbound by its ID.
+
+        [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#b7c42b67-4362-44d3-bd61-ba7df0721802)
+
+        Arguments:
+            inbound_id (int): The ID of the inbound to retrieve.
+
+        Returns:
+            Optional[Inbound]: The inbound object if found, otherwise None.
+
+        Examples:
+            
+            import py3xui
+
+            api = py3xui.Api.from_env()
+            api.login()
+
+            inbound_id = 1
+            inbound = api.inbound.get_by_id(inbound_id)
+            if inbound:
+                print(f"Inbound ID {inbound_id} found: {inbound}")
+            else:
+                print(f"Inbound ID {inbound_id} not found.")
+            
+        """  # pylint: disable=line-too-long
+        endpoint = f"panel/api/inbounds/get/{inbound_id}"
+        headers = {"Accept": "application/json"}
+
+        url = self._url(endpoint)
+        self.logger.info("Getting inbound by ID: %s", inbound_id)
+
+        response = self._get(url, headers)
+
+        inbound_json = response.json().get(ApiFields.OBJ)
+        if inbound_json:
+            return Inbound.model_validate(inbound_json)
+        return None
