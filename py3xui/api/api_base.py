@@ -30,14 +30,6 @@ class BaseApi:
         _password (str): The XUI password (read-only).
         _max_retries (int): The maximum number of retries for API requests.
         _session (str | None): The session cookie for API requests.
-
-    Methods:
-        login: Logs into the XUI API.
-        _check_response: Checks the response from the API for success status.
-        _url: Constructs the full URL for API endpoints.
-        _request_with_retry: Sends a request with retry logic.
-        _post: Sends a POST request.
-        _get: Sends a GET request.
     """
 
     def __init__(self, host: str, username: str, password: str):
