@@ -1,5 +1,5 @@
 """
-This module contains the `Inbound` class, which represents the inbound settings for a network service.
+This module contains the `Inbound` class, which represents the inbound settings for a network service within the XUI API.
 """
 
 from typing import Any
@@ -37,24 +37,24 @@ class InboundFields:
 
 # pylint: disable=too-few-public-methods
 class Inbound(BaseModel):
-    """Class representing the inbound settings for a network service.
+    """Class representing the inbound settings for a network service within the XUI API.
 
     Attributes:
-        enable (bool): Whether the inbound connection is enabled.
-        port (int): The port number for the inbound connection.
-        protocol (str): The protocol used for the inbound connection.
-        settings (Settings): The settings object for the inbound connection.
-        stream_settings (StreamSettings): The stream settings object for the inbound connection.
-        sniffing (Sniffing): The sniffing object for the inbound connection.
-        listen (str): The listen address for the inbound connection. Default is an empty string.
-        remark (str): A remark or description for the inbound connection. Default is an empty string.
-        id (int): The ID of the inbound connection. Default is 0.
-        up (int): The upload speed for the inbound connection. Default is 0.
-        down (int): The download speed for the inbound connection. Default is 0.
-        total (int): The total amount of data for the inbound connection. Default is 0.
-        expiry_time (int): The expiry time for the inbound connection. Default is 0.
-        client_stats (list[Client]): The list of client statistics for the inbound connection. Default is an empty list.
-        tag (str): The tag for the inbound connection. Default is an empty string.
+        enable (bool): Whether the inbound connection is enabled. This is a required field.
+        port (int): The port number for the inbound connection. This is a required field.
+        protocol (str): The protocol used for the inbound connection. This is a required field.
+        settings (Settings): The settings object for the inbound connection. This is a required field.
+        stream_settings (StreamSettings): The stream settings object for the inbound connection. This is a required field.
+        sniffing (Sniffing): The sniffing object for the inbound connection. This is a required field.
+        listen (str): The listen address for the inbound connection. This is an optional field and defaults to an empty string.
+        remark (str): A remark or description for the inbound connection. This is an optional field and defaults to an empty string.
+        id (int): The ID of the inbound connection. This is an optional field and defaults to 0.
+        up (int): The upload speed for the inbound connection. This is an optional field and defaults to 0.
+        down (int): The download speed for the inbound connection. This is an optional field and defaults to 0.
+        total (int): The total amount of data for the inbound connection. This is an optional field and defaults to 0.
+        expiry_time (int): The expiry time for the inbound connection. This is an optional field and defaults to 0.
+        client_stats (list[Client]): The list of client statistics for the inbound connection. This is an optional field and defaults to an empty list.
+        tag (str): The tag for the inbound connection. This is an optional field and defaults to an empty string.
     """
 
     enable: bool
