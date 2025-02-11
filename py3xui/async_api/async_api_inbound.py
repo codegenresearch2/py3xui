@@ -1,4 +1,4 @@
-"""This module contains the InboundApi class which provides methods to interact with the
+"""This module contains the AsyncInboundApi class which provides methods to interact with the
 clients in the XUI API asynchronously."""
 
 from typing import Any
@@ -30,14 +30,14 @@ class AsyncInboundApi(AsyncBaseApi):
         reset_client_stats: Resets the statistics of a specific inbound.
 
     Examples:
-        ```python
+        
         import py3xui
 
         api = py3xui.AsyncApi.from_env()
         await api.login()
 
         inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
-        ```
+        
     """
 
     async def get_list(self) -> list[Inbound]:
@@ -50,14 +50,14 @@ class AsyncInboundApi(AsyncBaseApi):
             list[Inbound]: A list of inbounds.
 
         Examples:
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
             await api.login()
             inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
-            ```
-        """  # pylint: disable=line-too-long
+            
+        """
         endpoint = "panel/api/inbounds/list"
         headers = {"Accept": "application/json"}
 
@@ -70,46 +70,6 @@ class AsyncInboundApi(AsyncBaseApi):
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    async def get_by_id(self, inbound_id: int) -> Inbound:
-        """This route is used to retrieve statistics and details for a specific inbound connection
-        identified by specified ID. This includes information about the inbound itself, its
-        statistics, and the clients connected to it.
-        If the inbound is not found, the method will raise an exception.
-
-        [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
-
-        Arguments:
-            inbound_id (int): The ID of the inbound to retrieve.
-
-        Returns:
-            Inbound | None: The inbound object if found, otherwise None.
-
-        Examples:
-
-            ```python
-
-            import py3xui
-
-            api = py3xui.AsyncApi.from_env()
-
-            await api.login()
-
-            inbound_id = 1
-
-            inbound = await api.inbound.get_by_id(inbound_id)
-        """
-        endpoint = f"panel/api/inbounds/get/{inbound_id}"
-        headers = {"Accept": "application/json"}
-
-        url = self._url(endpoint)
-        self.logger.info("Getting inbound by ID: %s", inbound_id)
-
-        response = await self._get(url, headers)
-
-        inbound_json = response.json().get(ApiFields.OBJ)
-        inbound = Inbound.model_validate(inbound_json)
-        return inbound
-
     async def add(self, inbound: Inbound) -> None:
         """This route is used to add a new inbound configuration.
 
@@ -119,7 +79,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound (Inbound): The inbound object to add.
 
         Examples:
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
@@ -144,8 +104,8 @@ class AsyncInboundApi(AsyncBaseApi):
                 remark="test3",
             )
             await api.inbound.add(inbound)
-            ```
-        """  # pylint: disable=line-too-long
+            
+        """
         endpoint = "panel/api/inbounds/add"
         headers = {"Accept": "application/json"}
 
@@ -165,8 +125,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to delete.
 
         Examples:
-
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
@@ -174,9 +133,9 @@ class AsyncInboundApi(AsyncBaseApi):
             inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
 
             for inbound in inbounds:
-                api.inbound.delete(inbound.id)
-            ```
-        """  # pylint: disable=line-too-long
+                await api.inbound.delete(inbound.id)
+            
+        """
         endpoint = f"panel/api/inbounds/del/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -197,7 +156,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound (Inbound): The inbound object to update.
 
         Examples:
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
@@ -207,9 +166,9 @@ class AsyncInboundApi(AsyncBaseApi):
 
             inbound.remark = "updated"
 
-            api.inbound.update(inbound.id, inbound)
-            ```
-        """  # pylint: disable=line-too-long
+            await api.inbound.update(inbound.id, inbound)
+            
+        """
         endpoint = f"panel/api/inbounds/update/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -226,14 +185,14 @@ class AsyncInboundApi(AsyncBaseApi):
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#6749f362-dc81-4769-8f45-37dc9e99f5e9)
 
         Examples:
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
             await api.login()
             await api.inbound.reset_stats()
-            ```
-        """  # pylint: disable=line-too-long
+            
+        """
         endpoint = "panel/api/inbounds/resetAllTraffics"
         headers = {"Accept": "application/json"}
 
@@ -254,7 +213,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to reset the client stats.
 
         Examples:
-            ```python
+            
             import py3xui
 
             api = py3xui.AsyncApi.from_env()
@@ -263,8 +222,8 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound = inbounds[0]
 
             await api.inbound.reset_client_stats(inbound.id)
-            ```
-        """  # pylint: disable=line-too-long
+            
+        """
         endpoint = f"panel/api/inbounds/resetAllClientTraffics/{inbound_id}"
         headers = {"Accept": "application/json"}
 
