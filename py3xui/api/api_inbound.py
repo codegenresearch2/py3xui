@@ -236,7 +236,7 @@ class InboundApi(BaseApi):
         self._post(url, headers, data)
         self.logger.info("Inbound client stats reset successfully.")
 
-    def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
+    def get_by_id(self, inbound_id: int) -> Inbound:
         """This method retrieves an inbound by its ID.
 
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#b7c42b67-4362-44d3-bd61-ba7df0721802)
@@ -245,7 +245,7 @@ class InboundApi(BaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Optional[Inbound]: The inbound object if found, otherwise None.
+            Inbound: The inbound object if found, otherwise raises an exception.
 
         Examples:
             
@@ -255,11 +255,11 @@ class InboundApi(BaseApi):
             api.login()
 
             inbound_id = 1
-            inbound = api.inbound.get_by_id(inbound_id)
-            if inbound:
+            try:
+                inbound = api.inbound.get_by_id(inbound_id)
                 print(f"Inbound ID {inbound_id} found: {inbound}")
-            else:
-                print(f"Inbound ID {inbound_id} not found.")
+            except Exception as e:
+                print(f"Inbound ID {inbound_id} not found: {e}")
             
         """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/get/{inbound_id}"
@@ -273,4 +273,4 @@ class InboundApi(BaseApi):
         inbound_json = response.json().get(ApiFields.OBJ)
         if inbound_json:
             return Inbound.model_validate(inbound_json)
-        return None
+        raise ValueError(f"Inbound with ID {inbound_id} not found.")
