@@ -44,6 +44,11 @@ class Api:
     def from_env(cls, skip_login: bool = False) -> Api:
         """Create an instance of the Api class using environment variables for credentials.
 
+        Required environment variables:
+            XUI_HOST: The host URL for the XUI API.
+            XUI_USERNAME: The username for authentication.
+            XUI_PASSWORD: The password for authentication.
+
         Args:
             skip_login (bool, optional): Whether to skip the login process. Defaults to False.
 
@@ -51,7 +56,6 @@ class Api:
             Api: An instance of the Api class.
 
         Examples:
-            To create an Api instance using environment variables:
             
             api = Api.from_env()
             
@@ -67,7 +71,6 @@ class Api:
         This method sets the session for the inbound and database APIs to the session of the client API.
 
         Examples:
-            To manually log in:
             
             api = Api('https://example.com', 'user', 'pass')
             api.login()
