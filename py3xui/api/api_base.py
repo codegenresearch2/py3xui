@@ -165,7 +165,10 @@ class BaseApi:
             requests.Response: The response from the request.
 
         Raises:
-            requests.exceptions.RetryError: If the maximum number of retries is exceeded without a successful response.
+            requests.exceptions.ConnectionError: If a connection error occurs.
+            requests.exceptions.Timeout: If a timeout error occurs.
+            requests.exceptions.RequestException: For other request-related exceptions.
+            ValueError: If the response status is not successful.
         """
         logger.debug("%s request to %s...", method.__name__.upper(), url)
         for retry in range(1, self.max_retries + 1):
