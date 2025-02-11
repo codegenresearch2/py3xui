@@ -11,15 +11,19 @@ Attributes:
 Examples:
     To create an instance of the Api class using environment variables for credentials:
 
-    >>> api = Api.from_env()
-    >>> api.client.get_client_info()
-    {'status': 'success', 'data': {...}}
+    
+    api = Api.from_env()
+    response = api.client.get_client_info()
+    print(response)
+    
 
     To manually initialize the Api class with specific credentials:
 
-    >>> api = Api('https://xui.example.com', 'user', 'pass')
-    >>> api.login()
-    INFO: Logged in successfully.
+    
+    api = Api('https://xui.example.com', 'user', 'pass')
+    api.login()
+    print("Logged in successfully.")
+    
 """
 
 from __future__ import annotations
