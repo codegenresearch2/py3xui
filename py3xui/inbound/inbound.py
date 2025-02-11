@@ -40,7 +40,7 @@ class Inbound(BaseModel):
     """Class representing the inbound settings for a network service.
 
     Attributes:
-        enable (bool): Whether the inbound is enabled.
+        enable (bool): Indicates whether the inbound is enabled.
         port (int): The port number for the inbound.
         protocol (str): The protocol used for the inbound.
         settings (Settings): The settings object for the inbound.
