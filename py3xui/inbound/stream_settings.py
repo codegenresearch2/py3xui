@@ -1,5 +1,3 @@
-"""This module contains the StreamSettings class for parsing the XUI API response."""
-
 from pydantic import ConfigDict, Field
 
 from py3xui.inbound.bases import JsonStringModel
@@ -21,16 +19,16 @@ class StreamSettingsFields:
 
 
 class StreamSettings(JsonStringModel):
-    """Represents the stream settings for an inbound.
+    """Represents the stream settings for an inbound connection.
 
     Attributes:
-        security (str): The security for the inbound connection. Required.
-        network (str): The network for the inbound connection. Required.
-        tcp_settings (dict): The TCP settings for the inbound connection. Required.
-        external_proxy (list): The external proxy for the inbound connection. Optional.
-        reality_settings (dict): The reality settings for the inbound connection. Optional.
-        xtls_settings (dict): The xTLS settings for the inbound connection. Optional.
-        tls_settings (dict): The TLS settings for the inbound connection. Optional.
+        security (str): The security settings for the inbound connection.
+        network (str): The network settings for the inbound connection.
+        tcp_settings (dict): The TCP settings for the inbound connection. Default is an empty dictionary.
+        external_proxy (list): The external proxy settings for the inbound connection. Default is an empty list.
+        reality_settings (dict): The reality settings for the inbound connection. Default is an empty dictionary.
+        xtls_settings (dict): The xtls settings for the inbound connection. Default is an empty dictionary.
+        tls_settings (dict): The TLS settings for the inbound connection. Default is an empty dictionary.
     """
 
     security: str
