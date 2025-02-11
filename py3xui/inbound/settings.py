@@ -1,8 +1,11 @@
+"""
+This module handles the configuration settings for the inbound connections.
+"""
+
 from py3xui.client.client import Client
 from py3xui.inbound.bases import JsonStringModel
 
 
-# pylint: disable=too-few-public-methods
 class SettingsFields:
     """Stores the fields returned by the XUI API for parsing.
 
@@ -18,12 +21,12 @@ class SettingsFields:
 
 
 class Settings(JsonStringModel):
-    """Represents the settings parsed from the XUI API.
+    """Represents the settings parsed from the XUI API for inbound connections.
 
     Attributes:
-        clients (list[Client]): A list of Client objects.
-        decryption (str): A string representing the decryption settings.
-        fallbacks (list): A list representing fallbacks.
+        clients (list[Client], optional): A list of Client objects. Defaults to an empty list.
+        decryption (str, optional): A string representing the decryption settings. Defaults to an empty string.
+        fallbacks (list, optional): A list representing fallbacks. Defaults to an empty list.
     """
 
     clients: list[Client] = []
