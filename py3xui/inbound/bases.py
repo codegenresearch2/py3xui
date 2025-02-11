@@ -1,5 +1,5 @@
 """
-This module provides a Pydantic model for validating JSON strings.
+This module contains base classes for models that include a JSON string field.
 """
 
 import json
@@ -8,7 +8,7 @@ from pydantic import BaseModel, model_validator
 
 class JsonStringModel(BaseModel):
     """
-    A Pydantic model that validates JSON strings.
+    Base class for models that include a JSON string field.
     """
 
     @model_validator(mode="before")
