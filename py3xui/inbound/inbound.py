@@ -79,10 +79,10 @@ class Inbound(BaseModel):
     )
 
     def to_json(self) -> dict[str, Any]:
-        """Converts the Inbound object to a JSON-compatible dictionary for the XUI API.
+        """Converts the Inbound instance to a JSON-compatible dictionary for the XUI API.
 
         Returns:
-            dict[str, Any]: A dictionary representation of the Inbound object in JSON format.
+            dict[str, Any]: A dictionary representation of the Inbound instance in JSON format.
         """
         include = {
             InboundFields.REMARK,
