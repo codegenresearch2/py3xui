@@ -17,7 +17,7 @@ Methods:
         Creates an Api instance from environment variables.
 
     login(self) -> None:
-        Logs in to the API using the provided credentials.
+        Logs in to the API using the provided credentials. This method sets the session for all API clients.
 """
 
 from __future__ import annotations
@@ -28,6 +28,21 @@ logger = Logger(__name__)
 
 
 class Api:
+    """
+    The Api class provides methods to interact with the XUI API.
+
+    This class initializes with the necessary credentials and API clients. If `skip_login` is False, it logs in to the API.
+
+    Attributes:
+        host (str): The API host.
+        username (str): The API username.
+        password (str): The API password.
+        skip_login (bool): Whether to skip the login step.
+        client (ClientApi): The ClientApi instance for interacting with the client API.
+        inbound (InboundApi): The InboundApi instance for interacting with the inbound API.
+        database (DatabaseApi): The DatabaseApi instance for interacting with the database API.
+    """
+
     def __init__(self, host: str, username: str, password: str, skip_login: bool = False):
         """
         Initializes the Api class with the necessary credentials and API clients.
@@ -66,9 +81,11 @@ class Api:
 
     def login(self) -> None:
         """
-        Logs in to the API using the provided credentials.
+        Logs in to the API using the provided credentials. This method sets the session for all API clients.
 
-        This method logs in to the API and sets the session for all API clients.
+        Example:
+            api_instance = Api.from_env()
+            api_instance.login()
         """
         self.client.login()
         self.inbound.session = self.client.session
