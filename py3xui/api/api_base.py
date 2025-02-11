@@ -1,5 +1,5 @@
 """
-This module provides classes to interact with the XUI API.
+This module contains the base class for interacting with the XUI API.
 """
 
 from __future__ import annotations
