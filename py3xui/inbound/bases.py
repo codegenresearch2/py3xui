@@ -12,10 +12,7 @@ class JsonStringModel(BaseModel):
     """
 
     @model_validator(mode="before")
-    def model_validate(
-        cls,
-        values,
-    ):  # pylint: disable=no-self-argument, arguments-differ
+    def model_validate(cls, values):  # pylint: disable=no-self-argument, arguments-differ
         """
         Validates the input values. If the input is a string, it attempts to parse it as JSON.
 
