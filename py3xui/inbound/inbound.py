@@ -32,7 +32,25 @@ class InboundFields:
 
 
 class Inbound(BaseModel):
-    """Represents an inbound connection in the XUI system."""
+    """Represents an inbound connection in the XUI system.
+
+    Attributes:
+        enable (bool): Indicates whether the inbound is enabled.
+        port (int): The port number for the inbound connection.
+        protocol (str): The protocol used for the inbound connection.
+        settings (Settings): The settings for the inbound connection.
+        stream_settings (StreamSettings): The stream settings for the inbound connection.
+        sniffing (Sniffing): The sniffing settings for the inbound connection.
+        listen (str): The listen address for the inbound connection.
+        remark (str): A remark or description for the inbound connection.
+        id (int): The ID of the inbound connection.
+        up (int): The upload speed for the inbound connection.
+        down (int): The download speed for the inbound connection.
+        total (int): The total amount of data for the inbound connection.
+        expiry_time (int): The expiry time for the inbound connection.
+        client_stats (list[Client]): The list of client statistics for the inbound connection.
+        tag (str): The tag for the inbound connection.
+    """
 
     enable: bool
     port: int
@@ -60,7 +78,11 @@ class Inbound(BaseModel):
     )
 
     def to_json(self) -> dict[str, Any]:
-        """Converts the Inbound object to a JSON-compatible dictionary."""
+        """Converts the Inbound object to a JSON-compatible dictionary.
+
+        Returns:
+            dict[str, Any]: A dictionary representation of the Inbound object.
+        """
         include = {
             InboundFields.REMARK,
             InboundFields.ENABLE,
