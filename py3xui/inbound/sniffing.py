@@ -20,7 +20,7 @@ class Sniffing(JsonStringModel):
 
     Attributes:
         enabled (bool): Whether sniffing is enabled. Required.
-        dest_override (list[str]): The list of destination overrides for sniffing. Optional.
+        dest_override (list[str]): The destination override for sniffing. Optional.
         metadata_only (bool): Whether to only sniff metadata. Optional.
         route_only (bool): Whether to only sniff routes. Optional.
     """
