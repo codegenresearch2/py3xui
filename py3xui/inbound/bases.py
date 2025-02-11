@@ -19,7 +19,7 @@ class JsonStringModel(BaseModel):
             values: The input value to be validated.
 
         Returns:
-            The input value converted to a dictionary if it's a JSON string, otherwise returns the input value.
+            The validated and possibly converted value.
         """
         if isinstance(values, str):
             try:
