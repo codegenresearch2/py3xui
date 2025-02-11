@@ -77,7 +77,7 @@ class AsyncInboundApi(AsyncBaseApi):
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    async def get_by_id(self, inbound_id: int) -> Inbound:
+    async def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
         """This route is used to retrieve statistics and details for a specific inbound connection
         identified by specified ID. This includes information about the inbound itself, its
         statistics, and the clients connected to it.
@@ -90,7 +90,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Inbound: The inbound object if found, otherwise raises ValueError.
+            Inbound | None: The inbound object if found, otherwise None.
 
         Examples:
             
