@@ -8,7 +8,10 @@ logger = Logger(__name__)
 
 
 class Api:
-    """A class to interact with the XUI API.
+    """A high-level interface to interact with the XUI API.
+
+    This class provides methods to interact with the XUI API using the provided credentials.
+    It handles the login process automatically if not skipped.
 
     Attributes:
         host (str): The host URL for the XUI API.
@@ -46,6 +49,12 @@ class Api:
 
         Returns:
             Api: An instance of the Api class.
+
+        Examples:
+            To create an Api instance using environment variables:
+            
+            api = Api.from_env()
+            
         """
         host = env.xui_host()
         username = env.xui_username()
@@ -56,6 +65,13 @@ class Api:
         """Log in to the XUI API using the provided credentials.
 
         This method sets the session for the inbound and database APIs to the session of the client API.
+
+        Examples:
+            To manually log in:
+            
+            api = Api('https://example.com', 'user', 'pass')
+            api.login()
+            
         """
         self.client.login()
         self.inbound.session = self.client.session
