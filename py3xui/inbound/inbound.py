@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field
 # Stores the fields returned by the XUI API for parsing.
 class InboundFields:
     """Stores the fields returned by the XUI API for parsing.
-    
+
     Attributes:
         ENABLE (str): Indicates whether the inbound is enabled.
         PORT (str): The port number for the inbound connection.
