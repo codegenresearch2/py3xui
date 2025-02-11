@@ -1,9 +1,28 @@
 """
-This module provides classes to interact with the XUI API.
+This module provides a high-level interface to interact with the XUI API.
 
-The module includes classes for interacting with the client, inbound, and database APIs, as well as a utility for logging.
+The `Api` class offers methods to interact with the client, inbound, and database APIs of the XUI system.
+
+Attributes:
+    client (ClientApi): An instance of the ClientApi class for client-related operations.
+    inbound (InboundApi): An instance of the InboundApi class for inbound-related operations.
+    database (DatabaseApi): An instance of the DatabaseApi class for database-related operations.
+
+Examples:
+    To create an instance of the Api class using environment variables for credentials:
+
+    >>> api = Api.from_env()
+    >>> api.client.get_client_info()
+    {'status': 'success', 'data': {...}}
+
+    To manually initialize the Api class with specific credentials:
+
+    >>> api = Api('https://xui.example.com', 'user', 'pass')
+    >>> api.login()
+    INFO: Logged in successfully.
 """
 
+from __future__ import annotations
 from py3xui.api import ClientApi, DatabaseApi, InboundApi
 from py3xui.utils import Logger, env
 
@@ -12,10 +31,9 @@ logger = Logger(__name__)
 
 class Api:
     """
-    A class to interact with the XUI API.
+    A high-level interface to interact with the XUI API.
 
     This class provides methods to interact with the client, inbound, and database APIs of the XUI system.
-    It uses the ClientApi, InboundApi, and DatabaseApi classes to perform operations.
 
     Attributes:
         client (ClientApi): An instance of the ClientApi class for client-related operations.
@@ -45,7 +63,7 @@ class Api:
             self.login()
 
     @classmethod
-    def from_env(cls, skip_login: bool = False) -> 'Api':
+    def from_env(cls, skip_login: bool = False) -> Api:
         """
         Creates an instance of the Api class using environment variables for credentials.
 
