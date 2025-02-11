@@ -1,8 +1,5 @@
-from time import sleep
 from typing import Any, Callable
-
 import requests
-
 from py3xui.utils import Logger
 
 logger = Logger(__name__)
@@ -20,7 +17,37 @@ class ApiFields:
 
 
 class BaseApi:
+    """A class to interact with the XUI API.
+
+    Args:
+        host (str): The XUI host URL.
+        username (str): The XUI username.
+        password (str): The XUI password.
+
+    Attributes:
+        _host (str): The XUI host URL (read-only).
+        _username (str): The XUI username (read-only).
+        _password (str): The XUI password (read-only).
+        _max_retries (int): The maximum number of retries for API requests.
+        _session (str | None): The session cookie for API requests.
+
+    Methods:
+        login: Logs into the XUI API.
+        _check_response: Checks the response from the API for success status.
+        _url: Constructs the full URL for API endpoints.
+        _request_with_retry: Sends a request with retry logic.
+        _post: Sends a POST request.
+        _get: Sends a GET request.
+    """
+
     def __init__(self, host: str, username: str, password: str):
+        """Initializes the BaseApi instance.
+
+        Args:
+            host (str): The XUI host URL.
+            username (str): The XUI username.
+            password (str): The XUI password.
+        """
         self._host = host.rstrip("/")
         self._username = username
         self._password = password
@@ -29,43 +56,72 @@ class BaseApi:
 
     @property
     def host(self) -> str:
+        """The XUI host URL.
+
+        Returns:
+            str: The host URL.
+        """
         return self._host
 
     @property
     def username(self) -> str:
+        """The XUI username.
+
+        Returns:
+            str: The username.
+        """
         return self._username
 
     @property
     def password(self) -> str:
+        """The XUI password.
+
+        Returns:
+            str: The password.
+        """
         return self._password
 
     @property
     def max_retries(self) -> int:
+        """The maximum number of retries for API requests.
+
+        Returns:
+            int: The maximum retries.
+        """
         return self._max_retries
 
     @max_retries.setter
     def max_retries(self, value: int) -> None:
+        """Sets the maximum number of retries for API requests.
+
+        Args:
+            value (int): The new maximum retries value.
+        """
         self._max_retries = value
 
     @property
     def session(self) -> str | None:
+        """The session cookie for API requests.
+
+        Returns:
+            str | None: The session cookie.
+        """
         return self._session
 
     @session.setter
     def session(self, value: str | None) -> None:
+        """Sets the session cookie for API requests.
+
+        Args:
+            value (str | None): The session cookie value.
+        """
         self._session = value
 
     def login(self) -> None:
-        """Logs into the XUI API and sets the session cookie for the client, inbound, and
-        database APIs.
+        """Logs into the XUI API and sets the session cookie.
 
-        Examples:
-            
-            import py3xui
-
-            api = py3xui.Api.from_env(skip_login=True)
-            api.login()
-            
+        Raises:
+            ValueError: If no session cookie is found after login.
         """
         endpoint = "login"
         headers: dict[str, str] = {}
@@ -82,6 +138,14 @@ class BaseApi:
         self.session = cookie
 
     def _check_response(self, response: requests.Response) -> None:
+        """Checks the response from the API for success status.
+
+        Args:
+            response (requests.Response): The API response.
+
+        Raises:
+            ValueError: If the response status is not successful.
+        """
         response_json = response.json()
 
         status = response_json.get(ApiFields.SUCCESS)
@@ -90,6 +154,14 @@ class BaseApi:
             raise ValueError(f"Response status is not successful, message: {message}")
 
     def _url(self, endpoint: str) -> str:
+        """Constructs the full URL for API endpoints.
+
+        Args:
+            endpoint (str): The API endpoint.
+
+        Returns:
+            str: The full URL.
+        """
         return f"{self._host}/{endpoint}"
 
     def _request_with_retry(
@@ -99,6 +171,23 @@ class BaseApi:
         headers: dict[str, str],
         **kwargs: Any,
     ) -> requests.Response:
+        """Sends a request with retry logic.
+
+        Args:
+            method (Callable[..., requests.Response]): The HTTP method to use.
+            url (str): The URL to request.
+            headers (dict[str, str]): The headers to include in the request.
+            **kwargs (Any): Additional keyword arguments to pass to the request method.
+
+        Returns:
+            requests.Response: The API response.
+
+        Raises:
+            requests.exceptions.ConnectionError: If the connection fails.
+            requests.exceptions.Timeout: If the request times out.
+            requests.exceptions.RequestException: For other request errors.
+            requests.exceptions.RetryError: If all retries fail.
+        """
         logger.debug("%s request to %s...", method.__name__.upper(), url)
         for retry in range(1, self.max_retries + 1):
             try:
@@ -125,7 +214,28 @@ class BaseApi:
     def _post(
         self, url: str, headers: dict[str, str], data: dict[str, Any], **kwargs: Any
     ) -> requests.Response:
+        """Sends a POST request.
+
+        Args:
+            url (str): The URL to request.
+            headers (dict[str, str]): The headers to include in the request.
+            data (dict[str, Any]): The data to send in the request.
+            **kwargs (Any): Additional keyword arguments to pass to the request method.
+
+        Returns:
+            requests.Response: The API response.
+        """
         return self._request_with_retry(requests.post, url, headers, json=data, **kwargs)
 
     def _get(self, url: str, headers: dict[str, str], **kwargs: Any) -> requests.Response:
+        """Sends a GET request.
+
+        Args:
+            url (str): The URL to request.
+            headers (dict[str, str]): The headers to include in the request.
+            **kwargs (Any): Additional keyword arguments to pass to the request method.
+
+        Returns:
+            requests.Response: The API response.
+        """
         return self._request_with_retry(requests.get, url, headers, **kwargs)
