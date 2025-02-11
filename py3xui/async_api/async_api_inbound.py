@@ -141,7 +141,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
         inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = "panel/api/inbounds/list"
         headers = {"Accept": "application/json"}
 
@@ -154,7 +154,7 @@ class AsyncInboundApi(AsyncBaseApi):
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    async def get_by_id(self, inbound_id: int) -> Inbound:
+    async def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
         """This route is used to retrieve statistics and details for a specific inbound connection
         identified by specified ID. This includes information about the inbound itself, its
         statistics, and the clients connected to it.
@@ -166,7 +166,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Inbound: The inbound object if found.
+            Inbound | None: The inbound object if found, otherwise None.
 
         Raises:
             ValueError: If the inbound is not found.
@@ -182,7 +182,7 @@ class AsyncInboundApi(AsyncBaseApi):
         inbound_id = 1
         inbound = await api.inbound.get_by_id(inbound_id)
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/get/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -233,7 +233,7 @@ class AsyncInboundApi(AsyncBaseApi):
         )
         await api.inbound.add(inbound)
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = "panel/api/inbounds/add"
         headers = {"Accept": "application/json"}
 
@@ -264,7 +264,7 @@ class AsyncInboundApi(AsyncBaseApi):
         for inbound in inbounds:
             await api.inbound.delete(inbound.id)
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/del/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -297,7 +297,7 @@ class AsyncInboundApi(AsyncBaseApi):
         inbound.remark = "updated"
         await api.inbound.update(inbound.id, inbound)
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/update/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -322,7 +322,7 @@ class AsyncInboundApi(AsyncBaseApi):
         await api.login()
         await api.inbound.reset_stats()
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = "panel/api/inbounds/resetAllTraffics"
         headers = {"Accept": "application/json"}
 
@@ -354,7 +354,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
         await api.inbound.reset_client_stats(inbound.id)
         
-        """  # pylint: disable=line-too-long
+        """
         endpoint = f"panel/api/inbounds/resetAllClientTraffics/{inbound_id}"
         headers = {"Accept": "application/json"}
 
