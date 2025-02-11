@@ -125,7 +125,7 @@ class BaseApi:
         response = self._post(url, headers, data)
         cookie: str | None = response.cookies.get("session")
         if not cookie:
-            raise ValueError("No session cookie found, something wrong with the login...")
+            raise ValueError("Login failed, no session cookie found.")
         logger.info("Session cookie successfully retrieved for username: %s", self.username)
         self.session = cookie
 
