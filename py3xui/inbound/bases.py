@@ -8,7 +8,7 @@ from pydantic import BaseModel, model_validator
 
 class JsonStringModel(BaseModel):
     """
-    A base class for Pydantic models that have a JSON string field.
+    A Pydantic model that validates JSON strings.
     """
 
     @model_validator(mode="before")
