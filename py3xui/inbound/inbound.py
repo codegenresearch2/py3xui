@@ -35,8 +35,27 @@ class InboundFields:
     TAG = "tag"
 
 
+# pylint: disable=too-few-public-methods
 class Inbound(BaseModel):
-    """Class representing the inbound settings for a network service."""
+    """Class representing the inbound settings for a network service.
+
+    Attributes:
+        enable (bool): Whether the inbound is enabled.
+        port (int): The port number for the inbound.
+        protocol (str): The protocol used for the inbound.
+        settings (Settings): The settings object for the inbound.
+        stream_settings (StreamSettings): The stream settings object for the inbound.
+        sniffing (Sniffing): The sniffing object for the inbound.
+        listen (str): The listen address for the inbound.
+        remark (str): A remark or description for the inbound.
+        id (int): The ID of the inbound.
+        up (int): The upload speed for the inbound.
+        down (int): The download speed for the inbound.
+        total (int): The total amount of data for the inbound.
+        expiry_time (int): The expiry time for the inbound.
+        client_stats (list[Client]): The list of client statistics for the inbound.
+        tag (str): The tag for the inbound.
+    """
 
     enable: bool
     port: int
