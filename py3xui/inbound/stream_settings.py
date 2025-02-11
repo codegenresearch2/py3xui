@@ -38,13 +38,11 @@ class StreamSettings(JsonStringModel):
 
     security: str
     network: str
-    tcp_settings: dict = Field(default_factory=dict, alias=StreamSettingsFields.TCP_SETTINGS)  # type: ignore
-
-    external_proxy: list = Field(default_factory=list, alias=StreamSettingsFields.EXTERNAL_PROXY)  # type: ignore
-
-    reality_settings: dict = Field(default_factory=dict, alias=StreamSettingsFields.REALITY_SETTINGS)  # type: ignore
-    xtls_settings: dict = Field(default_factory=dict, alias=StreamSettingsFields.XTLS_SETTINGS)  # type: ignore
-    tls_settings: dict = Field(default_factory=dict, alias=StreamSettingsFields.TLS_SETTINGS)  # type: ignore
+    tcp_settings: dict = Field(default_factory=dict)  # type: ignore
+    external_proxy: list = Field(default_factory=list)  # type: ignore
+    reality_settings: dict = Field(default_factory=dict)  # type: ignore
+    xtls_settings: dict = Field(default_factory=dict)  # type: ignore
+    tls_settings: dict = Field(default_factory=dict)  # type: ignore
 
     model_config = ConfigDict(
         populate_by_name=True,
