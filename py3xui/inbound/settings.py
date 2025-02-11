@@ -20,12 +20,12 @@ class Settings(JsonStringModel):
     Class representing the settings for an inbound connection.
 
     Attributes:
-        clients (List[Client]): List of Client objects.
+        clients (list): List of Client objects.
         decryption (str): String representing the decryption settings.
         fallbacks (list): List of fallbacks.
     """
 
-    clients: List[Client] = []
+    clients: list = []
     """List of Client objects."""
 
     decryption: str = ""
