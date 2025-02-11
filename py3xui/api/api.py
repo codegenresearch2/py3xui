@@ -1,23 +1,38 @@
 """
-This module provides classes to interact with the XUI API.
+This module provides a high-level interface to interact with the XUI API.
 
-The Api class allows for interaction with the XUI API using the ClientApi, InboundApi, and DatabaseApi classes.
+The Api class is designed to facilitate interaction with the XUI API using the ClientApi, InboundApi, and DatabaseApi classes.
 
 Attributes:
     host (str): The API host.
     username (str): The API username.
     password (str): The API password.
     skip_login (bool): Whether to skip the login step.
+    client (ClientApi): The ClientApi instance for interacting with the client API.
+    inbound (InboundApi): The InboundApi instance for interacting with the inbound API.
+    database (DatabaseApi): The DatabaseApi instance for interacting with the database API.
 
 Methods:
     __init__(self, host: str, username: str, password: str, skip_login: bool = False):
         Initializes the Api class with the necessary credentials and API clients.
+        Args:
+            host (str): The API host.
+            username (str): The API username.
+            password (str): The API password.
+            skip_login (bool, optional): Whether to skip the login step. Defaults to False.
 
     from_env(cls, skip_login: bool = False) -> Api:
         Creates an Api instance from environment variables.
+        Args:
+            skip_login (bool, optional): Whether to skip the login step. Defaults to False.
+        Returns:
+            Api: An instance of the Api class.
 
     login(self) -> None:
         Logs in to the API using the provided credentials. This method sets the session for all API clients.
+        Example:
+            api_instance = Api.from_env()
+            api_instance.login()
 """
 
 from __future__ import annotations
@@ -29,9 +44,7 @@ logger = Logger(__name__)
 
 class Api:
     """
-    The Api class provides methods to interact with the XUI API.
-
-    This class initializes with the necessary credentials and API clients. If `skip_login` is False, it logs in to the API.
+    The Api class provides a high-level interface to interact with the XUI API.
 
     Attributes:
         host (str): The API host.
@@ -70,7 +83,6 @@ class Api:
 
         Args:
             skip_login (bool, optional): Whether to skip the login step. Defaults to False.
-
         Returns:
             Api: An instance of the Api class.
         """
