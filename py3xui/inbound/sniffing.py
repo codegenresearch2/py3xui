@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from py3xui.inbound.bases import JsonStringModel
 
 
 # pylint: disable=too-few-public-methods
@@ -13,7 +14,7 @@ class SniffingFields:
     ROUTE_ONLY = "routeOnly"
 
 
-class Sniffing(BaseModel):
+class Sniffing(JsonStringModel):
     """Represents sniffing settings for inbound connections in the XUI API.
 
     Attributes:
@@ -24,9 +25,9 @@ class Sniffing(BaseModel):
     """
 
     enabled: bool = Field(..., alias=SniffingFields.ENABLED)
-    dest_override: list[str] = Field(default=[], alias=SniffingFields.DEST_OVERRIDE)
-    metadata_only: bool = Field(default=False, alias=SniffingFields.METADATA_ONLY)
-    route_only: bool = Field(default=False, alias=SniffingFields.ROUTE_ONLY)
+    dest_override: list[str] = Field(default=[], alias=SniffingFields.DEST_OVERRIDE)  # type: ignore
+    metadata_only: bool = Field(default=False, alias=SniffingFields.METADATA_ONLY)  # type: ignore
+    route_only: bool = Field(default=False, alias=SniffingFields.ROUTE_ONLY)  # type: ignore
 
     def to_json(self) -> dict:
         """Converts the Sniffing instance to a JSON-compatible dictionary for the XUI API.
