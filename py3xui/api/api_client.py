@@ -1,5 +1,5 @@
 import json
-from typing import Any, List, Optional
+from typing import List, Optional
 from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.client.client import Client
 from py3xui.utils import Logger
@@ -21,11 +21,13 @@ class ClientApi(BaseApi):
             Optional[Client]: The client object if found, otherwise None.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             client: py3xui.Client = api.get_by_email("email")
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/getClientTraffics/{email}"
         headers = {"Accept": "application/json"}
 
@@ -50,11 +52,13 @@ class ClientApi(BaseApi):
             Optional[str]: The client IPs if found, otherwise None.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             ips = api.get_ips("email")
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/clientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -74,12 +78,14 @@ class ClientApi(BaseApi):
             clients (List[Client]): The list of clients to be added.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             clients = [...]  # List of Client objects
             api.add(inbound_id, clients)
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = "panel/api/inbounds/addClient"
         headers = {"Accept": "application/json"}
 
@@ -103,12 +109,14 @@ class ClientApi(BaseApi):
             client (Client): The updated client object.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             updated_client = py3xui.Client(...)  # Updated client object
             api.update(client_uuid, updated_client)
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/updateClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -127,11 +135,13 @@ class ClientApi(BaseApi):
             email (str): The email of the client whose IPs will be reset.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             api.reset_ips("email")
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/clearClientIps/{email}"
         headers = {"Accept": "application/json"}
 
@@ -150,11 +160,13 @@ class ClientApi(BaseApi):
             email (str): The email of the client whose stats will be reset.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             api.reset_stats(inbound_id, "email")
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/{inbound_id}/resetClientTraffic/{email}"
         headers = {"Accept": "application/json"}
 
@@ -173,11 +185,13 @@ class ClientApi(BaseApi):
             client_uuid (str): The UUID of the client to be deleted.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             api.delete(inbound_id, client_uuid)
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/{inbound_id}/delClient/{client_uuid}"
         headers = {"Accept": "application/json"}
 
@@ -195,11 +209,13 @@ class ClientApi(BaseApi):
             inbound_id (int): The ID of the inbound from which depleted clients will be deleted.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             api.delete_depleted(inbound_id)
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/delDepletedClients/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -217,11 +233,13 @@ class ClientApi(BaseApi):
             List[str]: A list of emails of online clients.
 
         Examples:
+            
             import py3xui
 
             api = py3xui.Api.from_env()
             online_clients = api.online()
-        """
+            
+        """  # pylint: disable=line-too-long
         endpoint = "panel/api/inbounds/onlines"
         headers = {"Accept": "application/json"}
 
