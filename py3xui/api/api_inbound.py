@@ -57,6 +57,7 @@ class InboundApi(BaseApi):
 
             inbounds: list[py3xui.Inbound] = api.inbound.get_list()
             
+        
         """
         endpoint = "panel/api/inbounds/list"
         headers = {"Accept": "application/json"}
@@ -107,6 +108,7 @@ class InboundApi(BaseApi):
 
             api.inbound.add(inbound)
             
+        
         """
         endpoint = "panel/api/inbounds/add"
         headers = {"Accept": "application/json"}
@@ -137,6 +139,7 @@ class InboundApi(BaseApi):
             for inbound in inbounds:
                 api.inbound.delete(inbound.id)
             
+        
         """
         endpoint = f"panel/api/inbounds/del/{inbound_id}"
         headers = {"Accept": "application/json"}
@@ -170,6 +173,7 @@ class InboundApi(BaseApi):
 
             api.inbound.update(inbound.id, inbound)
             
+        
         """
         endpoint = f"panel/api/inbounds/update/{inbound_id}"
         headers = {"Accept": "application/json"}
@@ -194,6 +198,7 @@ class InboundApi(BaseApi):
             api.login()
             api.inbound.reset_stats()
             
+        
         """
         endpoint = "panel/api/inbounds/resetAllTraffics"
         headers = {"Accept": "application/json"}
@@ -225,6 +230,7 @@ class InboundApi(BaseApi):
 
             api.inbound.reset_client_stats(inbound.id)
             
+        
         """
         endpoint = f"panel/api/inbounds/resetAllClientTraffics/{inbound_id}"
         headers = {"Accept": "application/json"}
@@ -261,6 +267,7 @@ class InboundApi(BaseApi):
             else:
                 print("Inbound not found.")
             
+        
         """
         endpoint = f"panel/api/inbounds/get/{inbound_id}"
         headers = {"Accept": "application/json"}
