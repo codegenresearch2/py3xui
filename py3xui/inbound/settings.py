@@ -1,7 +1,7 @@
 """
 This module provides classes for parsing settings from the XUI API.
 """
-from typing import List
+from typing import List, Optional
 from py3xui.client.client import Client
 from py3xui.inbound.bases import JsonStringModel
 
@@ -20,16 +20,16 @@ class Settings(JsonStringModel):
     Class representing the settings for an inbound connection.
 
     Attributes:
-        clients (List[Client]): List of Client objects (optional).
-        decryption (str): String representing the decryption settings (optional).
-        fallbacks (list): List of fallbacks (optional).
+        clients (Optional[List[Client]]): List of Client objects.
+        decryption (Optional[str]): String representing the decryption settings.
+        fallbacks (Optional[list]): List of fallbacks.
     """
 
-    clients: List[Client] = []
+    clients: Optional[List[Client]] = []
     """List of Client objects."""
 
-    decryption: str = ""
+    decryption: Optional[str] = ""
     """String representing the decryption settings."""
 
-    fallbacks: list = []
+    fallbacks: Optional[list] = []
     """List of fallbacks."""
