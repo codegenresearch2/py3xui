@@ -113,7 +113,7 @@ class BaseApi:
         """Logs into the XUI API and sets the session cookie.
 
         Raises:
-            ValueError: If no session cookie is found after login.
+            ValueError: If the login is unsuccessful.
         """
         endpoint = "login"
         headers: dict[str, str] = {}
