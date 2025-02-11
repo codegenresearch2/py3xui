@@ -46,6 +46,8 @@ class Api:
     """
     The Api class provides a high-level interface to interact with the XUI API.
 
+    This class initializes with the necessary credentials and API clients. If `skip_login` is False, it logs in to the API.
+
     Attributes:
         host (str): The API host.
         username (str): The API username.
