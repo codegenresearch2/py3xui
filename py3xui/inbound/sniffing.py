@@ -1,8 +1,4 @@
-"""This module contains the Sniffing class for parsing the XUI API response."""
-
 from pydantic import Field
-
-from py3xui.inbound.bases import JsonStringModel
 
 
 # pylint: disable=too-few-public-methods
@@ -17,20 +13,39 @@ class SniffingFields:
     ROUTE_ONLY = "routeOnly"
 
 
-class Sniffing(JsonStringModel):
-    """Represents the sniffing settings for an inbound.
+class Sniffing:
+    """Represents sniffing settings for inbound connections in the XUI API.
 
     Attributes:
         enabled (bool): Whether sniffing is enabled. Required.
-        dest_override (list[str]): The destination override. Optional.
+        dest_override (list[str]): List of destination overrides for sniffing. Optional.
         metadata_only (bool): Whether to only sniff metadata. Optional.
-        route_only (bool): Whether to only sniff routes. Optional.
-
+        route_only (bool): Whether to only route the sniffed traffic. Optional.
     """
 
-    enabled: bool
+    def __init__(self, enabled: bool, dest_override: list[str] = [], metadata_only: bool = False, route_only: bool = False):
+        """Initializes the Sniffing class.
 
-    dest_override: list[str] = Field(default=[], alias=SniffingFields.DEST_OVERRIDE)  # type: ignore
+        Args:
+            enabled (bool): Whether sniffing is enabled.
+            dest_override (list[str], optional): List of destination overrides for sniffing. Defaults to an empty list.
+            metadata_only (bool, optional): Whether to only sniff metadata. Defaults to False.
+            route_only (bool, optional): Whether to only route the sniffed traffic. Defaults to False.
+        """
+        self.enabled = enabled
+        self.dest_override = dest_override
+        self.metadata_only = metadata_only
+        self.route_only = route_only
 
-    metadata_only: bool = Field(default=False, alias=SniffingFields.METADATA_ONLY)  # type: ignore
-    route_only: bool = Field(default=False, alias=SniffingFields.ROUTE_ONLY)  # type: ignore
+    def to_json(self) -> dict:
+        """Converts the Sniffing instance to a JSON-compatible dictionary for the XUI API.
+
+        Returns:
+            dict: The JSON-compatible dictionary.
+        """
+        return {
+            SniffingFields.ENABLED: self.enabled,
+            SniffingFields.DEST_OVERRIDE: self.dest_override,
+            SniffingFields.METADATA_ONLY: self.metadata_only,
+            SniffingFields.ROUTE_ONLY: self.route_only,
+        }
