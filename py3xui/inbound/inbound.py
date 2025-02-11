@@ -1,5 +1,5 @@
 """
-This module defines the Inbound class, which represents the inbound settings for a network service.
+This module contains the `Inbound` class, which represents the inbound settings for a network service.
 """
 
 from typing import Any
@@ -40,21 +40,21 @@ class Inbound(BaseModel):
     """Class representing the inbound settings for a network service.
 
     Attributes:
-        enable (bool): Indicates whether the inbound is enabled.
-        port (int): The port number for the inbound.
-        protocol (str): The protocol used for the inbound.
-        settings (Settings): The settings object for the inbound.
-        stream_settings (StreamSettings): The stream settings object for the inbound.
-        sniffing (Sniffing): The sniffing object for the inbound.
-        listen (str): The listen address for the inbound.
-        remark (str): A remark or description for the inbound.
-        id (int): The ID of the inbound.
-        up (int): The upload speed for the inbound.
-        down (int): The download speed for the inbound.
-        total (int): The total amount of data for the inbound.
-        expiry_time (int): The expiry time for the inbound.
-        client_stats (list[Client]): The list of client statistics for the inbound.
-        tag (str): The tag for the inbound.
+        enable (bool): Indicates whether the inbound is enabled. This is a required field.
+        port (int): The port number for the inbound. This is a required field.
+        protocol (str): The protocol used for the inbound. This is a required field.
+        settings (Settings): The settings object for the inbound. This is a required field.
+        stream_settings (StreamSettings): The stream settings object for the inbound. This is a required field.
+        sniffing (Sniffing): The sniffing object for the inbound. This is a required field.
+        listen (str): The listen address for the inbound. This is an optional field with a default value of an empty string.
+        remark (str): A remark or description for the inbound. This is an optional field with a default value of an empty string.
+        id (int): The ID of the inbound. This is an optional field with a default value of 0.
+        up (int): The upload speed for the inbound. This is an optional field with a default value of 0.
+        down (int): The download speed for the inbound. This is an optional field with a default value of 0.
+        total (int): The total amount of data for the inbound. This is an optional field with a default value of 0.
+        expiry_time (int): The expiry time for the inbound. This is an optional field with a default value of 0.
+        client_stats (list[Client]): The list of client statistics for the inbound. This is an optional field with a default value of an empty list.
+        tag (str): The tag for the inbound. This is an optional field with a default value of an empty string.
     """
 
     enable: bool
