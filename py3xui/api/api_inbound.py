@@ -1,6 +1,6 @@
 """This module contains the InboundApi class for handling inbounds in the XUI API."""
 
-from typing import Any
+from typing import Any, Optional
 
 from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.inbound import Inbound
@@ -264,11 +264,11 @@ class InboundApi(BaseApi):
             api.login()
 
             inbound_id = 1
-            inbound = api.inbound.get_by_id(inbound_id)
-            if inbound:
+            try:
+                inbound = api.inbound.get_by_id(inbound_id)
                 print(f"Inbound found: {inbound}")
-            else:
-                print("Inbound not found.")
+            except ValueError as e:
+                print(str(e))
             
         
         """
