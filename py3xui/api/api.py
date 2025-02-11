@@ -50,7 +50,7 @@ class Api:
         Initializes the Api class with the necessary credentials and API instances.
 
         Args:
-            host (str): The host URL for the XUI API.
+            host (str): The XUI host URL for the API.
             username (str): The username for authentication.
             password (str): The password for authentication.
             skip_login (bool, optional): Whether to skip the login process. Defaults to False.
@@ -79,7 +79,7 @@ class Api:
 
         Notes:
             The following environment variables must be set:
-                - XUI_HOST: The host URL for the XUI API.
+                - XUI_HOST: The XUI host URL for the API.
                 - XUI_USERNAME: The username for authentication.
                 - XUI_PASSWORD: The password for authentication.
         """
