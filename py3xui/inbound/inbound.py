@@ -31,6 +31,7 @@ class InboundFields:
     TAG = "tag"
 
 
+# pylint: disable=too-few-public-methods
 class Inbound(BaseModel):
     """Represents an inbound connection in the XUI system.
 
@@ -78,10 +79,10 @@ class Inbound(BaseModel):
     )
 
     def to_json(self) -> dict[str, Any]:
-        """Converts the Inbound object to a JSON-compatible dictionary.
+        """Converts the Inbound object to a JSON-compatible dictionary for the XUI API.
 
         Returns:
-            dict[str, Any]: A dictionary representation of the Inbound object.
+            dict[str, Any]: A dictionary representation of the Inbound object in JSON format.
         """
         include = {
             InboundFields.REMARK,
