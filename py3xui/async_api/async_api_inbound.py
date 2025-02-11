@@ -32,12 +32,93 @@ class AsyncInboundApi(AsyncBaseApi):
 
     Examples:
     
+    
     import py3xui
 
     api = py3xui.AsyncApi.from_env()
     await api.login()
 
     inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
+    
+    
+    
+    import py3xui
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+
+    inbound_id = 1
+    inbound = await api.inbound.get_by_id(inbound_id)
+    
+    
+    
+    import py3xui
+    from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+
+    settings = Settings()
+    sniffing = Sniffing(enabled=True)
+
+    tcp_settings = {
+        "acceptProxyProtocol": False,
+        "header": {"type": "none"},
+    }
+    stream_settings = StreamSettings(security="reality", network="tcp", tcp_settings=tcp_settings)
+
+    inbound = Inbound(
+        enable=True,
+        port=443,
+        protocol="vless",
+        settings=settings,
+        stream_settings=stream_settings,
+        sniffing=sniffing,
+        remark="test3",
+    )
+    await api.inbound.add(inbound)
+    
+    
+    
+    import py3xui
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+    inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
+
+    for inbound in inbounds:
+        await api.inbound.delete(inbound.id)
+    
+    
+    
+    import py3xui
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+    inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
+    inbound = inbounds[0]
+
+    inbound.remark = "updated"
+    await api.inbound.update(inbound.id, inbound)
+    
+    
+    
+    import py3xui
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+    await api.inbound.reset_stats()
+    
+    
+    
+    import py3xui
+
+    api = py3xui.AsyncApi.from_env()
+    await api.login()
+    inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
+    inbound = inbounds[0]
+
+    await api.inbound.reset_client_stats(inbound.id)
     
     """
 
@@ -52,10 +133,12 @@ class AsyncInboundApi(AsyncBaseApi):
 
         Examples:
         
+        
         import py3xui
 
         api = py3xui.AsyncApi.from_env()
         await api.login()
+
         inbounds: list[py3xui.Inbound] = await api.inbound.get_list()
         
         """  # pylint: disable=line-too-long
@@ -71,11 +154,11 @@ class AsyncInboundApi(AsyncBaseApi):
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    async def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
+    async def get_by_id(self, inbound_id: int) -> Inbound:
         """This route is used to retrieve statistics and details for a specific inbound connection
         identified by specified ID. This includes information about the inbound itself, its
         statistics, and the clients connected to it.
-        If the inbound is not found, the method will return None.
+        If the inbound is not found, an exception will be raised.
 
         [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
 
@@ -83,9 +166,13 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Inbound | None: The inbound object if found, otherwise None.
+            Inbound: The inbound object if found.
+
+        Raises:
+            ValueError: If the inbound is not found.
 
         Examples:
+        
         
         import py3xui
 
@@ -105,9 +192,9 @@ class AsyncInboundApi(AsyncBaseApi):
         response = await self._get(url, headers)
 
         inbound_json = response.json().get(ApiFields.OBJ)
-        if inbound_json:
-            return Inbound.model_validate(inbound_json)
-        return None
+        if inbound_json is None:
+            raise ValueError(f"Inbound with ID {inbound_id} not found")
+        return Inbound.model_validate(inbound_json)
 
     async def add(self, inbound: Inbound) -> None:
         """This route is used to add a new inbound configuration.
@@ -119,7 +206,9 @@ class AsyncInboundApi(AsyncBaseApi):
 
         Examples:
         
+        
         import py3xui
+        from py3xui.inbound import Inbound, Settings, Sniffing, StreamSettings
 
         api = py3xui.AsyncApi.from_env()
         await api.login()
@@ -165,6 +254,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
         Examples:
         
+        
         import py3xui
 
         api = py3xui.AsyncApi.from_env()
@@ -196,6 +286,7 @@ class AsyncInboundApi(AsyncBaseApi):
 
         Examples:
         
+        
         import py3xui
 
         api = py3xui.AsyncApi.from_env()
@@ -204,7 +295,6 @@ class AsyncInboundApi(AsyncBaseApi):
         inbound = inbounds[0]
 
         inbound.remark = "updated"
-
         await api.inbound.update(inbound.id, inbound)
         
         """  # pylint: disable=line-too-long
@@ -224,6 +314,7 @@ class AsyncInboundApi(AsyncBaseApi):
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#6749f362-dc81-4769-8f45-37dc9e99f5e9)
 
         Examples:
+        
         
         import py3xui
 
@@ -252,6 +343,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to reset the client stats.
 
         Examples:
+        
         
         import py3xui
 
