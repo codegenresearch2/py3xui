@@ -171,7 +171,7 @@ class BaseApi:
         headers: dict[str, str],
         **kwargs: Any,
     ) -> requests.Response:
-        """Sends a request with retry logic.
+        """Makes a request to the XUI API with retries.
 
         Args:
             method (Callable[..., requests.Response]): The HTTP method to use.
@@ -214,7 +214,7 @@ class BaseApi:
     def _post(
         self, url: str, headers: dict[str, str], data: dict[str, Any], **kwargs: Any
     ) -> requests.Response:
-        """Sends a POST request.
+        """Sends a POST request to the XUI API.
 
         Args:
             url (str): The URL to request.
@@ -228,7 +228,7 @@ class BaseApi:
         return self._request_with_retry(requests.post, url, headers, json=data, **kwargs)
 
     def _get(self, url: str, headers: dict[str, str], **kwargs: Any) -> requests.Response:
-        """Sends a GET request.
+        """Sends a GET request to the XUI API.
 
         Args:
             url (str): The URL to request.
