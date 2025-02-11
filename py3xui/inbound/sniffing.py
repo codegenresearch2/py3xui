@@ -1,15 +1,16 @@
+"""
+This module contains the Sniffing class, which represents sniffing settings for inbound connections in the XUI API.
+"""
+
 from pydantic import BaseModel, Field
 from py3xui.inbound.bases import JsonStringModel
 
 
-# pylint: disable=too-few-public-methods
 class SniffingFields:
     """Stores the fields returned by the XUI API for parsing."""
 
     ENABLED = "enabled"
-
     DEST_OVERRIDE = "destOverride"
-
     METADATA_ONLY = "metadataOnly"
     ROUTE_ONLY = "routeOnly"
 
