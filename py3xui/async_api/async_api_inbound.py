@@ -1,4 +1,4 @@
-"""This module contains the InboundApi class which provides methods to interact with the
+"""This module contains the AsyncInboundApi class which provides methods to interact with the
 clients in the XUI API asynchronously."""
 
 from typing import Any, Optional
@@ -7,6 +7,10 @@ import requests
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+from py3xui.api.api_base import ApiFields, BaseApi
+from py3xui.async_api.async_api_base import AsyncBaseApi
+from py3xui.inbound import Inbound
 
 class AsyncInboundApi(AsyncBaseApi):
     """This class provides methods to interact with the inbounds in the XUI API.
@@ -41,10 +45,6 @@ class AsyncInboundApi(AsyncBaseApi):
         
     """
 
-    def __init__(self, host: str, username: str, password: str, token: Optional[str] = None, use_tls_verify: bool = True, custom_certificate_path: Optional[str] = None, session: Optional[requests.Session] = None, max_retries: int = 3):
-        super().__init__(host, username, password, token, use_tls_verify, custom_certificate_path, session, max_retries)
-        self.logger = logging.getLogger(__name__)
-
     async def get_list(self) -> list[Inbound]:
         """This route is used to retrieve a comprehensive list of all inbounds along with
         their associated client options and statistics.
@@ -76,11 +76,11 @@ class AsyncInboundApi(AsyncBaseApi):
         inbounds = [Inbound.model_validate(data) for data in inbounds_json]
         return inbounds
 
-    async def get_by_id(self, inbound_id: int) -> Inbound:
+    async def get_by_id(self, inbound_id: int) -> Inbound | None:
         """This route is used to retrieve statistics and details for a specific inbound connection
         identified by specified ID. This includes information about the inbound itself, its
         statistics, and the clients connected to it.
-        If the inbound is not found, the method will raise an exception.
+        If the inbound is not found, the method will return None.
 
         [Source documentation](https://www.postman.com/hsanaei/3x-ui/request/uu7wm1k/inbound)
 
@@ -88,7 +88,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Inbound: The inbound object if found, otherwise None.
+            Inbound | None: The inbound object if found, otherwise None.
 
         Examples:
             
@@ -100,7 +100,7 @@ class AsyncInboundApi(AsyncBaseApi):
             inbound_id = 1
             inbound = await api.inbound.get_by_id(inbound_id)
             
-        """
+        """  # pylint: disable=line-too-long
         endpoint = f"panel/api/inbounds/get/{inbound_id}"
         headers = {"Accept": "application/json"}
 
@@ -110,8 +110,10 @@ class AsyncInboundApi(AsyncBaseApi):
         response = await self._get(url, headers)
 
         inbound_json = response.json().get(ApiFields.OBJ)
-        inbound = Inbound.model_validate(inbound_json)
-        return inbound
+        if inbound_json:
+            inbound = Inbound.model_validate(inbound_json)
+            return inbound
+        return None
 
     async def add(self, inbound: Inbound) -> None:
         """This route is used to add a new inbound configuration.
