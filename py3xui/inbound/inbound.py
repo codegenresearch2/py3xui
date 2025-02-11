@@ -40,21 +40,21 @@ class Inbound(BaseModel):
     """Class representing the inbound settings for a network service within the XUI API.
 
     Attributes:
-        enable (bool): Whether the inbound connection is enabled. This is a required field.
-        port (int): The port number for the inbound connection. This is a required field.
-        protocol (str): The protocol used for the inbound connection. This is a required field.
-        settings (Settings): The settings object for the inbound connection. This is a required field.
-        stream_settings (StreamSettings): The stream settings object for the inbound connection. This is a required field.
-        sniffing (Sniffing): The sniffing object for the inbound connection. This is a required field.
-        listen (str): The listen address for the inbound connection. This is an optional field and defaults to an empty string.
-        remark (str): A remark or description for the inbound connection. This is an optional field and defaults to an empty string.
-        id (int): The ID of the inbound connection. This is an optional field and defaults to 0.
-        up (int): The upload speed for the inbound connection. This is an optional field and defaults to 0.
-        down (int): The download speed for the inbound connection. This is an optional field and defaults to 0.
-        total (int): The total amount of data for the inbound connection. This is an optional field and defaults to 0.
-        expiry_time (int): The expiry time for the inbound connection. This is an optional field and defaults to 0.
-        client_stats (list[Client]): The list of client statistics for the inbound connection. This is an optional field and defaults to an empty list.
-        tag (str): The tag for the inbound connection. This is an optional field and defaults to an empty string.
+        enable (bool): Whether the inbound connection is enabled. (Required)
+        port (int): The port number for the inbound connection. (Required)
+        protocol (str): The protocol used for the inbound connection. (Required)
+        settings (Settings): The settings object for the inbound connection. (Required)
+        stream_settings (StreamSettings): The stream settings object for the inbound connection. (Required)
+        sniffing (Sniffing): The sniffing object for the inbound connection. (Required)
+        listen (str): The listen address for the inbound connection. (Optional)
+        remark (str): A remark or description for the inbound connection. (Optional)
+        id (int): The ID of the inbound connection. (Optional)
+        up (int): The upload speed for the inbound connection. (Optional)
+        down (int): The download speed for the inbound connection. (Optional)
+        total (int): The total amount of data for the inbound connection. (Optional)
+        expiry_time (int): The expiry time for the inbound connection. (Optional)
+        client_stats (list[Client]): The list of client statistics for the inbound connection. (Optional)
+        tag (str): The tag for the inbound connection. (Optional)
     """
 
     enable: bool
