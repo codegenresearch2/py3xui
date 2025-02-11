@@ -4,7 +4,7 @@ from pydantic import BaseModel, model_validator
 
 class JsonStringModel(BaseModel):
     """
-    A Pydantic model that validates whether the input is a JSON string and converts it to a dictionary if possible.
+    A base class for models that have a JSON string field.
     """
     @model_validator(mode="before")
     def model_validate(cls, values):  # pylint: disable=no-self-argument, arguments-differ
