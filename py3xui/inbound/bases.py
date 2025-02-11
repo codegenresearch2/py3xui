@@ -1,3 +1,7 @@
+"""
+This module contains a base class for models that have a JSON string field.
+"""
+
 import json
 from pydantic import BaseModel, model_validator
 
