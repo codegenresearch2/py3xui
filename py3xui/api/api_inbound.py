@@ -1,6 +1,6 @@
 """This module contains the InboundApi class for handling inbounds in the XUI API."""
 
-from typing import Any, Optional
+from typing import Any
 
 from py3xui.api.api_base import ApiFields, BaseApi
 from py3xui.inbound import Inbound
@@ -242,7 +242,7 @@ class InboundApi(BaseApi):
         self._post(url, headers, data)
         self.logger.info("Inbound client stats reset successfully.")
 
-    def get_by_id(self, inbound_id: int) -> Optional[Inbound]:
+    def get_by_id(self, inbound_id: int) -> Inbound:
         """Retrieves a specific inbound by its ID.
 
         [Source documentation](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm#specific-endpoint-for-get-by-id)
@@ -251,7 +251,10 @@ class InboundApi(BaseApi):
             inbound_id (int): The ID of the inbound to retrieve.
 
         Returns:
-            Optional[Inbound]: The inbound object with the specified ID, or None if not found.
+            Inbound: The inbound object with the specified ID.
+
+        Raises:
+            ValueError: If the inbound is not found.
 
         Examples:
             
@@ -280,7 +283,7 @@ class InboundApi(BaseApi):
         inbound_json = response.json().get(ApiFields.OBJ)
         if inbound_json is None:
             self.logger.warning("Inbound with ID %s not found", inbound_id)
-            return None
+            raise ValueError(f"Inbound with ID {inbound_id} not found")
         inbound = Inbound.model_validate(inbound_json)
         return inbound
 
