@@ -1,3 +1,7 @@
+"""
+This module defines the Inbound class, which represents the inbound settings for a network service.
+"""
+
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -10,6 +14,7 @@ from py3xui.inbound.stream_settings import StreamSettings
 
 # Stores the fields returned by the XUI API for parsing.
 class InboundFields:
+    """Class to store the fields returned by the XUI API for parsing."""
     ENABLE = "enable"
     PORT = "port"
     PROTOCOL = "protocol"
@@ -31,7 +36,7 @@ class InboundFields:
 
 
 class Inbound(BaseModel):
-    """Inbound class representing the inbound settings."""
+    """Class representing the inbound settings for a network service."""
 
     enable: bool
     port: int
@@ -59,7 +64,12 @@ class Inbound(BaseModel):
     )
 
     def to_json(self) -> dict[str, Any]:
-        """Convert the Inbound object to a JSON dictionary."""
+        """
+        Convert the Inbound object to a JSON dictionary.
+
+        Returns:
+            dict: A dictionary representation of the Inbound object.
+        """
         include = {
             InboundFields.REMARK,
             InboundFields.ENABLE,
